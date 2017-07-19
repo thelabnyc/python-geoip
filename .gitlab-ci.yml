@@ -1,8 +1,8 @@
 .build_job:
   script: &build_job
-    - echo docker login -u "$CI_REGISTRY_USER" -p "$CI_JOB_TOKEN" "$CI_REGISTRY"
-    - echo docker build --no-cache --build-arg PYTHON_VERSION=$PYTHON_VERSION -t "$CI_REGISTRY_IMAGE:$PYTHON_VERSION" .
-    - echo docker push "$CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG"
+    - docker login -u "$CI_REGISTRY_USER" -p "$CI_JOB_TOKEN" "$CI_REGISTRY"
+    - docker build --no-cache --build-arg PYTHON_VERSION=$PYTHON_VERSION -t "$CI_REGISTRY_IMAGE:$PYTHON_VERSION" .
+    - docker push "$CI_REGISTRY_IMAGE:$PYTHON_VERSION"
 
 build_python34:
   variables:
