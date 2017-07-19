@@ -6,15 +6,15 @@
 
 build_python34:
   variables:
-    PYTHON_VERSION: 3.4
+    PYTHON_VERSION: "3.4"
   script: *build_job
 
 build_python35:
   variables:
-    PYTHON_VERSION: 3.5
+    PYTHON_VERSION: "3.5"
   script: *build_job
 
 build_python36:
   variables:
-    PYTHON_VERSION: 3.6
+    PYTHON_VERSION: "3.6"
   script: *build_job
