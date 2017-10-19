@@ -36,3 +36,6 @@ RUN cd "$GEOIP_PATH" && \
 
 # Install the GeoIP Python library
 RUN pip install "geoip2"
+
+# Install IPython, because it's nice to have
+RUN pip install "ipython"
