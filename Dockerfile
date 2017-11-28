@@ -1,5 +1,6 @@
+ARG BASE_IMAGE=python
 ARG PYTHON_VERSION=3.6
-FROM python:${PYTHON_VERSION}
+FROM ${BASE_IMAGE}:${PYTHON_VERSION}
 
 # Environment Settings
 ENV GEOIP_PATH "/data/geo"
