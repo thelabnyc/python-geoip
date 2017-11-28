@@ -5,6 +5,8 @@
     - docker build --no-cache --build-arg BASE_IMAGE=$BASE_IMAGE --build-arg PYTHON_VERSION=$PYTHON_VERSION -t "$CI_REGISTRY_IMAGE:$OUTPUT_TAG_NAME" .
     - docker push "$CI_REGISTRY_IMAGE:$OUTPUT_TAG_NAME"
 
+
+
 build_python34:
   variables:
     BASE_IMAGE: python
@@ -26,7 +28,9 @@ build_python36:
     OUTPUT_TAG_NAME: "3.6"
   script: *build_job
 
-build_python35:
+
+
+build_pypy35:
   variables:
     BASE_IMAGE: pypy
     PYTHON_VERSION: "3-5"
