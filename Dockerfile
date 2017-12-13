@@ -2,6 +2,13 @@ ARG BASE_IMAGE=python
 ARG PYTHON_VERSION=3.6
 FROM ${BASE_IMAGE}:${PYTHON_VERSION}
 
+# Optionally install Geospatial libraries
+ARG GEOSPATIAL
+RUN if [ "$GEOSPATIAL" = "true" ]; then \
+        apt-get update; \
+        apt-get install -y binutils libproj-dev gdal-bin; \
+    fi
+
 # Environment Settings
 ENV GEOIP_PATH "/data/geo"
 ENV GEOIP_COUNTRY "GeoLite2-Country.mmdb"
