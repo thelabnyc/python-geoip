@@ -41,36 +41,6 @@ build_python37:
 
 
 
-build_python34_alpine:
-  variables:
-    BASE_IMAGE: python
-    PYTHON_VERSION: "3.4-alpine"
-    OUTPUT_TAG_NAME: "3.4-alpine"
-  script: *build_job
-
-build_python35_alpine:
-  variables:
-    BASE_IMAGE: python
-    PYTHON_VERSION: "3.5-alpine"
-    OUTPUT_TAG_NAME: "3.5-alpine"
-  script: *build_job
-
-build_python36_alpine:
-  variables:
-    BASE_IMAGE: python
-    PYTHON_VERSION: "3.6-alpine"
-    OUTPUT_TAG_NAME: "3.6-alpine"
-  script: *build_job
-
-build_python37_alpine:
-  variables:
-    BASE_IMAGE: python
-    PYTHON_VERSION: "3.7-alpine"
-    OUTPUT_TAG_NAME: "3.7-alpine"
-  script: *build_job
-
-
-
 build_pypy35:
   variables:
     BASE_IMAGE: pypy
