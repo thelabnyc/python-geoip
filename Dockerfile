@@ -13,7 +13,7 @@ RUN if [ "$GEOSPATIAL" = "true" ]; then \
 ENV GEOIP_PATH "/data/geo"
 ENV GEOIP_COUNTRY "GeoLite2-Country.mmdb"
 ENV GEOIP_CITY "GeoLite2-City.mmdb"
-ENV LIBMAXMINDDB_VERSION "1.2.0"
+ENV LIBMAXMINDDB_VERSION "1.3.2"
 
 # Create directories
 RUN mkdir -p "$GEOIP_PATH"
@@ -43,7 +43,7 @@ RUN cd "$GEOIP_PATH" && \
     gunzip "$GEOIP_PATH/$GEOIP_CITY.gz"
 
 # Install the GeoIP Python library
-RUN pip install "geoip2"
+RUN pip install --upgrade "geoip2"
 
 # Install IPython, because it's nice to have
-RUN pip install "ipython"
+RUN pip install --upgrade "ipython"
