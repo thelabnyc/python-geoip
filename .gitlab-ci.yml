@@ -12,6 +12,8 @@
 
 
 build_python34:
+  tags:
+    - docker-compose
   variables:
     BASE_IMAGE: python
     PYTHON_VERSION: "3.4"
@@ -19,6 +21,8 @@ build_python34:
   script: *build_job
 
 build_python35:
+  tags:
+    - docker-compose
   variables:
     BASE_IMAGE: python
     PYTHON_VERSION: "3.5"
@@ -26,6 +30,8 @@ build_python35:
   script: *build_job
 
 build_python36:
+  tags:
+    - docker-compose
   variables:
     BASE_IMAGE: python
     PYTHON_VERSION: "3.6"
@@ -33,6 +39,8 @@ build_python36:
   script: *build_job
 
 build_python37:
+  tags:
+    - docker-compose
   variables:
     BASE_IMAGE: python
     PYTHON_VERSION: "3.7"
@@ -42,6 +50,8 @@ build_python37:
 
 
 build_pypy35:
+  tags:
+    - docker-compose
   variables:
     BASE_IMAGE: pypy
     PYTHON_VERSION: "3-5"
@@ -49,6 +59,8 @@ build_pypy35:
   script: *build_job
 
 build_pypy36:
+  tags:
+    - docker-compose
   variables:
     BASE_IMAGE: pypy
     PYTHON_VERSION: "3-6"
