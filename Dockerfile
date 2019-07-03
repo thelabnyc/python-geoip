@@ -7,6 +7,7 @@ ARG GEOSPATIAL
 RUN if [ "$GEOSPATIAL" = "true" ]; then \
         apt-get update; \
         apt-get install -y binutils libproj-dev gdal-bin; \
+        rm -rf /var/lib/apt/lists/*; \
     fi
 
 # Environment Settings
@@ -43,7 +44,7 @@ RUN cd "$GEOIP_PATH" && \
     gunzip "$GEOIP_PATH/$GEOIP_CITY.gz"
 
 # Install the GeoIP Python library
-RUN pip install --upgrade "geoip2"
+RUN pip install --no-cache-dir --upgrade "geoip2"
 
 # Install IPython, because it's nice to have
-RUN pip install --upgrade "ipython"
+RUN pip install --no-cache-dir --upgrade "ipython"
