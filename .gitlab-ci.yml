@@ -11,15 +11,6 @@
 
 
 
-build_python34:
-  tags:
-    - docker-compose
-  variables:
-    BASE_IMAGE: python
-    PYTHON_VERSION: "3.4"
-    OUTPUT_TAG_NAME: "3.4"
-  script: *build_job
-
 build_python35:
   tags:
     - docker-compose
@@ -45,6 +36,15 @@ build_python37:
     BASE_IMAGE: python
     PYTHON_VERSION: "3.7"
     OUTPUT_TAG_NAME: "3.7"
+  script: *build_job
+
+build_python38:
+  tags:
+    - docker-compose
+  variables:
+    BASE_IMAGE: python
+    PYTHON_VERSION: "3.8"
+    OUTPUT_TAG_NAME: "3.8"
   script: *build_job
 
 
