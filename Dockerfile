@@ -33,15 +33,26 @@ RUN cd "/tmp/" && \
     ldconfig && \
     rm -r "/tmp/libmaxminddb-$LIBMAXMINDDB_VERSION"
 
+# Accept Maxmind License Key as a build arg
+# See https://blog.maxmind.com/2019/12/18/significant-changes-to-accessing-and-using-geolite2-databases/
+ARG MAXMIND_LICENSE_KEY
+
 # Download and unzip the GeoIP2 Country database
 RUN cd "$GEOIP_PATH" && \
-    wget "https://geolite.maxmind.com/download/geoip/database/$GEOIP_COUNTRY.gz" && \
-    gunzip "$GEOIP_PATH/$GEOIP_COUNTRY.gz"
+    wget "https://download.maxmind.com/app/geoip_download?edition_id=GeoLite2-Country&license_key=$MAXMIND_LICENSE_KEY&suffix=tar.gz" -O "$GEOIP_COUNTRY.tar.gz" && \
+    tar xvzf "$GEOIP_PATH/$GEOIP_COUNTRY.tar.gz" && \
+    mv $GEOIP_PATH/GeoLite2-Country_*/* "$GEOIP_PATH/" && \
+    rmdir $GEOIP_PATH/GeoLite2-Country_* && \
+    rm "$GEOIP_PATH/$GEOIP_COUNTRY.tar.gz"
+
 
 # Download and unzip the GeoIP2 City database
 RUN cd "$GEOIP_PATH" && \
-    wget "https://geolite.maxmind.com/download/geoip/database/$GEOIP_CITY.gz" && \
-    gunzip "$GEOIP_PATH/$GEOIP_CITY.gz"
+    wget "https://download.maxmind.com/app/geoip_download?edition_id=GeoLite2-City&license_key=$MAXMIND_LICENSE_KEY&suffix=tar.gz" -O "$GEOIP_CITY.tar.gz" && \
+    tar xvzf "$GEOIP_PATH/$GEOIP_CITY.tar.gz" && \
+    mv $GEOIP_PATH/GeoLite2-City_*/* "$GEOIP_PATH/" && \
+    rmdir $GEOIP_PATH/GeoLite2-City_* && \
+    rm "$GEOIP_PATH/$GEOIP_CITY.tar.gz"
 
 # Install the GeoIP Python library
 RUN pip install --no-cache-dir --upgrade "geoip2"
