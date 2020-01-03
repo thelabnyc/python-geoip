@@ -8,7 +8,8 @@
         --build-arg BASE_IMAGE=$BASE_IMAGE
         --build-arg PYTHON_VERSION=$PYTHON_VERSION
         --build-arg MAXMIND_LICENSE_KEY=$MAXMIND_LICENSE_KEY
-        -t "${CI_REGISTRY_IMAGE}:${OUTPUT_TAG_NAME}" .
+        --tag "${CI_REGISTRY_IMAGE}:${OUTPUT_TAG_NAME}"
+        --file $DOCKERFILE .
     - docker push "$CI_REGISTRY_IMAGE:$OUTPUT_TAG_NAME"
 
     - docker build
@@ -17,7 +18,8 @@
         --build-arg PYTHON_VERSION=$PYTHON_VERSION
         --build-arg MAXMIND_LICENSE_KEY=$MAXMIND_LICENSE_KEY
         --build-arg GEOSPATIAL=true
-        -t "${CI_REGISTRY_IMAGE}:${OUTPUT_TAG_NAME}-geospatial" .
+        --tag "${CI_REGISTRY_IMAGE}:${OUTPUT_TAG_NAME}-geospatial"
+        --file $DOCKERFILE .
     - docker push "${CI_REGISTRY_IMAGE}:${OUTPUT_TAG_NAME}-geospatial"
 
 
@@ -29,6 +31,7 @@ build_python35:
     BASE_IMAGE: python
     PYTHON_VERSION: "3.5"
     OUTPUT_TAG_NAME: "3.5"
+    DOCKERFILE: "./Dockerfile"
   script: *build_job
 
 build_python36:
@@ -38,6 +41,7 @@ build_python36:
     BASE_IMAGE: python
     PYTHON_VERSION: "3.6"
     OUTPUT_TAG_NAME: "3.6"
+    DOCKERFILE: "./Dockerfile"
   script: *build_job
 
 build_python37:
@@ -47,6 +51,7 @@ build_python37:
     BASE_IMAGE: python
     PYTHON_VERSION: "3.7"
     OUTPUT_TAG_NAME: "3.7"
+    DOCKERFILE: "./Dockerfile"
   script: *build_job
 
 build_python38:
@@ -56,6 +61,49 @@ build_python38:
     BASE_IMAGE: python
     PYTHON_VERSION: "3.8"
     OUTPUT_TAG_NAME: "3.8"
+    DOCKERFILE: "./Dockerfile"
+  script: *build_job
+
+
+
+build_python35_slim:
+  tags:
+    - docker-compose
+  variables:
+    BASE_IMAGE: python
+    PYTHON_VERSION: "3.5"
+    OUTPUT_TAG_NAME: "3.5-slim"
+    DOCKERFILE: "./Dockerfile.slim"
+  script: *build_job
+
+build_python36_slim:
+  tags:
+    - docker-compose
+  variables:
+    BASE_IMAGE: python
+    PYTHON_VERSION: "3.6"
+    OUTPUT_TAG_NAME: "3.6-slim"
+    DOCKERFILE: "./Dockerfile.slim"
+  script: *build_job
+
+build_python37_slim:
+  tags:
+    - docker-compose
+  variables:
+    BASE_IMAGE: python
+    PYTHON_VERSION: "3.7"
+    OUTPUT_TAG_NAME: "3.7-slim"
+    DOCKERFILE: "./Dockerfile.slim"
+  script: *build_job
+
+build_python38_slim:
+  tags:
+    - docker-compose
+  variables:
+    BASE_IMAGE: python
+    PYTHON_VERSION: "3.8"
+    OUTPUT_TAG_NAME: "3.8-slim"
+    DOCKERFILE: "./Dockerfile.slim"
   script: *build_job
 
 
@@ -67,6 +115,7 @@ build_pypy36:
     BASE_IMAGE: pypy
     PYTHON_VERSION: "3-6"
     OUTPUT_TAG_NAME: "3.6-pypy"
+    DOCKERFILE: "./Dockerfile"
   script: *build_job
 
 build_pypy37:
@@ -76,4 +125,5 @@ build_pypy37:
     BASE_IMAGE: pypy
     PYTHON_VERSION: "3-7"
     OUTPUT_TAG_NAME: "3.7-pypy"
+    DOCKERFILE: "./Dockerfile"
   script: *build_job
