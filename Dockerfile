@@ -22,7 +22,7 @@ RUN mkdir -p "$GEOIP_PATH"
 # Install GeoIP2 C library
 # See https://docs.djangoproject.com/en/dev/ref/contrib/gis/geoip2/
 RUN cd "/tmp/" && \
-    wget "https://github.com/maxmind/libmaxminddb/releases/download/$LIBMAXMINDDB_VERSION/libmaxminddb-$LIBMAXMINDDB_VERSION.tar.gz" && \
+    wget --quiet "https://github.com/maxmind/libmaxminddb/releases/download/$LIBMAXMINDDB_VERSION/libmaxminddb-$LIBMAXMINDDB_VERSION.tar.gz" && \
     tar -zxf "libmaxminddb-$LIBMAXMINDDB_VERSION.tar.gz" && \
     rm "libmaxminddb-$LIBMAXMINDDB_VERSION.tar.gz" && \
     cd "/tmp/libmaxminddb-$LIBMAXMINDDB_VERSION/" && \
@@ -39,7 +39,7 @@ ARG MAXMIND_LICENSE_KEY
 
 # Download and unzip the GeoIP2 Country database
 RUN cd "$GEOIP_PATH" && \
-    wget "https://download.maxmind.com/app/geoip_download?edition_id=GeoLite2-Country&license_key=$MAXMIND_LICENSE_KEY&suffix=tar.gz" -O "$GEOIP_COUNTRY.tar.gz" && \
+    wget --quiet "https://download.maxmind.com/app/geoip_download?edition_id=GeoLite2-Country&license_key=$MAXMIND_LICENSE_KEY&suffix=tar.gz" -O "$GEOIP_COUNTRY.tar.gz" && \
     tar xvzf "$GEOIP_PATH/$GEOIP_COUNTRY.tar.gz" && \
     mv $GEOIP_PATH/GeoLite2-Country_*/* "$GEOIP_PATH/" && \
     rmdir $GEOIP_PATH/GeoLite2-Country_* && \
@@ -48,7 +48,7 @@ RUN cd "$GEOIP_PATH" && \
 
 # Download and unzip the GeoIP2 City database
 RUN cd "$GEOIP_PATH" && \
-    wget "https://download.maxmind.com/app/geoip_download?edition_id=GeoLite2-City&license_key=$MAXMIND_LICENSE_KEY&suffix=tar.gz" -O "$GEOIP_CITY.tar.gz" && \
+    wget --quiet "https://download.maxmind.com/app/geoip_download?edition_id=GeoLite2-City&license_key=$MAXMIND_LICENSE_KEY&suffix=tar.gz" -O "$GEOIP_CITY.tar.gz" && \
     tar xvzf "$GEOIP_PATH/$GEOIP_CITY.tar.gz" && \
     mv $GEOIP_PATH/GeoLite2-City_*/* "$GEOIP_PATH/" && \
     rmdir $GEOIP_PATH/GeoLite2-City_* && \
@@ -59,3 +59,7 @@ RUN pip install --no-cache-dir --upgrade "geoip2"
 
 # Install IPython, because it's nice to have
 RUN pip install --no-cache-dir --upgrade "ipython"
+
+# Install Poetry for dependency management
+# RUN pip install --no-cache-dir --upgrade "poetry" && \
+#     poetry config virtualenvs.create false

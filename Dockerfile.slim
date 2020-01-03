@@ -108,6 +108,10 @@ RUN pip install --no-cache-dir --upgrade "geoip2"
 # Install IPython, because it's nice to have
 RUN pip install --no-cache-dir --upgrade "ipython"
 
+# Install Poetry for dependency management
+RUN pip install --no-cache-dir --upgrade "poetry" && \
+    poetry config virtualenvs.create false
+
 # Optionally install Geospatial libraries
 ARG GEOSPATIAL
 RUN if [ "$GEOSPATIAL" = "true" ]; then \
