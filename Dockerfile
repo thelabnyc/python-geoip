@@ -2,14 +2,6 @@ ARG BASE_IMAGE=python
 ARG PYTHON_VERSION=3.6
 FROM ${BASE_IMAGE}:${PYTHON_VERSION}
 
-# Optionally install Geospatial libraries
-ARG GEOSPATIAL
-RUN if [ "$GEOSPATIAL" = "true" ]; then \
-        apt-get update; \
-        apt-get install -y binutils libproj-dev gdal-bin; \
-        rm -rf /var/lib/apt/lists/*; \
-    fi
-
 # Environment Settings
 ENV GEOIP_PATH "/data/geo"
 ENV GEOIP_COUNTRY "GeoLite2-Country.mmdb"
@@ -61,5 +53,13 @@ RUN pip install --no-cache-dir --upgrade "geoip2"
 RUN pip install --no-cache-dir --upgrade "ipython"
 
 # Install Poetry for dependency management
-# RUN pip install --no-cache-dir --upgrade "poetry" && \
-#     poetry config virtualenvs.create false
+RUN pip install --no-cache-dir --upgrade "poetry" && \
+    poetry config virtualenvs.create false
+
+# Optionally install Geospatial libraries
+ARG GEOSPATIAL
+RUN if [ "$GEOSPATIAL" = "true" ]; then \
+        apt-get update; \
+        apt-get install -y binutils libproj-dev gdal-bin; \
+        rm -rf /var/lib/apt/lists/*; \
+    fi
