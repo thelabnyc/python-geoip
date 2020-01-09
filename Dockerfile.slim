@@ -109,8 +109,9 @@ RUN pip install --no-cache-dir --upgrade "geoip2"
 RUN pip install --no-cache-dir --upgrade "ipython"
 
 # Install Poetry for dependency management
-RUN pip install --no-cache-dir --upgrade "poetry" && \
-    poetry config virtualenvs.create false
+RUN curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python
+ENV PATH "/root/.poetry/bin:${PATH}"
+RUN poetry config virtualenvs.create false
 
 # Optionally install Geospatial libraries
 ARG GEOSPATIAL
