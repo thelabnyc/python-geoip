@@ -24,26 +24,6 @@
 
 
 
-build_python35:
-  tags:
-    - docker-compose
-  variables:
-    BASE_IMAGE: python
-    PYTHON_VERSION: "3.5"
-    OUTPUT_TAG_NAME: "3.5"
-    DOCKERFILE: "Dockerfile"
-  script: *build_job
-
-build_python36:
-  tags:
-    - docker-compose
-  variables:
-    BASE_IMAGE: python
-    PYTHON_VERSION: "3.6"
-    OUTPUT_TAG_NAME: "3.6"
-    DOCKERFILE: "Dockerfile"
-  script: *build_job
-
 build_python37:
   tags:
     - docker-compose
@@ -64,27 +44,17 @@ build_python38:
     DOCKERFILE: "Dockerfile"
   script: *build_job
 
-
-
-build_python35_slim:
+build_python39:
   tags:
     - docker-compose
   variables:
     BASE_IMAGE: python
-    PYTHON_VERSION: "3.5-slim"
-    OUTPUT_TAG_NAME: "3.5-slim"
-    DOCKERFILE: "Dockerfile.slim"
+    PYTHON_VERSION: "3.9"
+    OUTPUT_TAG_NAME: "3.9"
+    DOCKERFILE: "Dockerfile"
   script: *build_job
 
-build_python36_slim:
-  tags:
-    - docker-compose
-  variables:
-    BASE_IMAGE: python
-    PYTHON_VERSION: "3.6-slim"
-    OUTPUT_TAG_NAME: "3.6-slim"
-    DOCKERFILE: "Dockerfile.slim"
-  script: *build_job
+
 
 build_python37_slim:
   tags:
@@ -103,6 +73,16 @@ build_python38_slim:
     BASE_IMAGE: python
     PYTHON_VERSION: "3.8-slim"
     OUTPUT_TAG_NAME: "3.8-slim"
+    DOCKERFILE: "Dockerfile.slim"
+  script: *build_job
+
+build_python39_slim:
+  tags:
+    - docker-compose
+  variables:
+    BASE_IMAGE: python
+    PYTHON_VERSION: "3.9-slim"
+    OUTPUT_TAG_NAME: "3.9-slim"
     DOCKERFILE: "Dockerfile.slim"
   script: *build_job
 
