@@ -24,32 +24,64 @@
 
 
 
-build_python37:
+build_python37_buster:
   tags:
     - docker-compose
   variables:
     BASE_IMAGE: python
-    PYTHON_VERSION: "3.7"
+    PYTHON_VERSION: "3.7-buster"
+    OUTPUT_TAG_NAME: "3.7-buster"
+    DOCKERFILE: "Dockerfile"
+  script: *build_job
+
+build_python38_buster:
+  tags:
+    - docker-compose
+  variables:
+    BASE_IMAGE: python
+    PYTHON_VERSION: "3.8-buster"
+    OUTPUT_TAG_NAME: "3.8-buster"
+    DOCKERFILE: "Dockerfile"
+  script: *build_job
+
+build_python39_buster:
+  tags:
+    - docker-compose
+  variables:
+    BASE_IMAGE: python
+    PYTHON_VERSION: "3.9-buster"
+    OUTPUT_TAG_NAME: "3.9-buster"
+    DOCKERFILE: "Dockerfile"
+  script: *build_job
+
+
+
+build_python37_bullseye:
+  tags:
+    - docker-compose
+  variables:
+    BASE_IMAGE: python
+    PYTHON_VERSION: "3.7-bullseye"
     OUTPUT_TAG_NAME: "3.7"
     DOCKERFILE: "Dockerfile"
   script: *build_job
 
-build_python38:
+build_python38_bullseye:
   tags:
     - docker-compose
   variables:
     BASE_IMAGE: python
-    PYTHON_VERSION: "3.8"
+    PYTHON_VERSION: "3.8-bullseye"
     OUTPUT_TAG_NAME: "3.8"
     DOCKERFILE: "Dockerfile"
   script: *build_job
 
-build_python39:
+build_python39_bullseye:
   tags:
     - docker-compose
   variables:
     BASE_IMAGE: python
-    PYTHON_VERSION: "3.9"
+    PYTHON_VERSION: "3.9-bullseye"
     OUTPUT_TAG_NAME: "3.9"
     DOCKERFILE: "Dockerfile"
   script: *build_job
@@ -61,7 +93,7 @@ build_python37_slim:
     - docker-compose
   variables:
     BASE_IMAGE: python
-    PYTHON_VERSION: "3.7-slim"
+    PYTHON_VERSION: "3.7-slim-buster"
     OUTPUT_TAG_NAME: "3.7-slim"
     DOCKERFILE: "Dockerfile.slim"
   script: *build_job
@@ -71,7 +103,7 @@ build_python38_slim:
     - docker-compose
   variables:
     BASE_IMAGE: python
-    PYTHON_VERSION: "3.8-slim"
+    PYTHON_VERSION: "3.8-slim-buster"
     OUTPUT_TAG_NAME: "3.8-slim"
     DOCKERFILE: "Dockerfile.slim"
   script: *build_job
@@ -81,7 +113,7 @@ build_python39_slim:
     - docker-compose
   variables:
     BASE_IMAGE: python
-    PYTHON_VERSION: "3.9-slim"
+    PYTHON_VERSION: "3.9-slim-buster"
     OUTPUT_TAG_NAME: "3.9-slim"
     DOCKERFILE: "Dockerfile.slim"
   script: *build_job
