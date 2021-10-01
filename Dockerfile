@@ -53,7 +53,7 @@ RUN pip install --no-cache-dir --upgrade "geoip2"
 RUN pip install --no-cache-dir --upgrade "ipython"
 
 # Install Poetry for dependency management
-ENV POETRY_VERSION "1.0.10"
+ENV POETRY_VERSION "1.1.10"
 RUN curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python
 ENV PATH "/root/.poetry/bin:${PATH}"
 RUN poetry config virtualenvs.create false
