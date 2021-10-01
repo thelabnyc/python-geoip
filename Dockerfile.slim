@@ -109,7 +109,7 @@ RUN pip install --no-cache-dir --upgrade "geoip2"
 RUN pip install --no-cache-dir --upgrade "ipython"
 
 # Install Poetry for dependency management
-ENV POETRY_VERSION "1.0.10"
+ENV POETRY_VERSION "1.1.10"
 RUN apt-get update && \
     apt-get install -y curl && \
     rm -rf /var/lib/apt/lists/* && \
