@@ -6,7 +6,7 @@ FROM ${BASE_IMAGE}:${PYTHON_VERSION}
 ENV GEOIP_PATH "/data/geo"
 ENV GEOIP_COUNTRY "GeoLite2-Country.mmdb"
 ENV GEOIP_CITY "GeoLite2-City.mmdb"
-ENV LIBMAXMINDDB_VERSION "1.3.2"
+ENV LIBMAXMINDDB_VERSION "1.6.0"
 
 # Create directories
 RUN mkdir -p "$GEOIP_PATH"
@@ -53,9 +53,9 @@ RUN pip install --no-cache-dir --upgrade "geoip2"
 RUN pip install --no-cache-dir --upgrade "ipython"
 
 # Install Poetry for dependency management
-ENV POETRY_VERSION "1.1.10"
-RUN curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python
-ENV PATH "/root/.poetry/bin:${PATH}"
+ENV POETRY_VERSION "1.1.13"
+RUN curl -sSL https://install.python-poetry.org | python3 -
+ENV PATH "/root/.local/bin:${PATH}"
 RUN poetry config virtualenvs.create false
 
 # Optionally install Geospatial libraries

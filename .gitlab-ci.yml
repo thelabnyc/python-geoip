@@ -1,141 +1,110 @@
-.build_job:
-  script: &build_job
-    - docker login -u "${CI_REGISTRY_USER}" -p "${CI_JOB_TOKEN}" "${CI_REGISTRY}"
-    - docker pull "${BASE_IMAGE}:${PYTHON_VERSION}"
+variables:
+  PLATFORMS: "linux/arm64/v8,linux/amd64"
+  DOCKER_BUILDKIT: "1"
 
-    - docker build
-        --no-cache
+build:
+  image: docker:latest
+  services:
+    - docker:dind
+
+  before_script:
+    # Experiment w/ qemu version
+    - docker run --privileged --rm tonistiigi/binfmt --install all
+    # End experiment
+
+  script:
+    - docker login -u "${CI_REGISTRY_USER}" -p "${CI_JOB_TOKEN}" "${CI_REGISTRY}"
+    - docker pull "${BASE_IMAGE}:${PYTHON_VERSION}" || true
+
+    # Create a buildx instance if one doesn't already exist
+    - if [ "$(docker buildx ls | grep docker-container  | wc -l)" -le "0" ]; then
+        docker buildx create --use;
+      fi
+
+    - docker buildx build
+        --platform "$PLATFORMS"
+        --pull
         --build-arg BASE_IMAGE=$BASE_IMAGE
         --build-arg PYTHON_VERSION=$PYTHON_VERSION
         --build-arg MAXMIND_LICENSE_KEY=$MAXMIND_LICENSE_KEY
+        --cache-from "${CI_REGISTRY_IMAGE}:${OUTPUT_TAG_NAME}"
         --tag "${CI_REGISTRY_IMAGE}:${OUTPUT_TAG_NAME}"
         --file $DOCKERFILE .
-    - docker push "$CI_REGISTRY_IMAGE:$OUTPUT_TAG_NAME"
+        --push
 
-    - docker build
-        --no-cache
+    - docker buildx build
+        --platform "$PLATFORMS"
+        --pull
         --build-arg BASE_IMAGE=$BASE_IMAGE
         --build-arg PYTHON_VERSION=$PYTHON_VERSION
         --build-arg MAXMIND_LICENSE_KEY=$MAXMIND_LICENSE_KEY
         --build-arg GEOSPATIAL=true
+        --cache-from "${CI_REGISTRY_IMAGE}:${OUTPUT_TAG_NAME}"
         --tag "${CI_REGISTRY_IMAGE}:${OUTPUT_TAG_NAME}-geospatial"
         --file $DOCKERFILE .
-    - docker push "${CI_REGISTRY_IMAGE}:${OUTPUT_TAG_NAME}-geospatial"
+        --push
 
+  parallel:
+    matrix:
+      # Buster builds
+      - BASE_IMAGE: python
+        PYTHON_VERSION: "3.7-buster"
+        OUTPUT_TAG_NAME: "3.7-buster"
+        DOCKERFILE: "Dockerfile"
 
+      - BASE_IMAGE: python
+        PYTHON_VERSION: "3.8-buster"
+        OUTPUT_TAG_NAME: "3.8-buster"
+        DOCKERFILE: "Dockerfile"
 
-build_python37_buster:
-  tags:
-    - docker-compose
-  variables:
-    BASE_IMAGE: python
-    PYTHON_VERSION: "3.7-buster"
-    OUTPUT_TAG_NAME: "3.7-buster"
-    DOCKERFILE: "Dockerfile"
-  script: *build_job
+      - BASE_IMAGE: python
+        PYTHON_VERSION: "3.9-buster"
+        OUTPUT_TAG_NAME: "3.9-buster"
+        DOCKERFILE: "Dockerfile"
 
-build_python38_buster:
-  tags:
-    - docker-compose
-  variables:
-    BASE_IMAGE: python
-    PYTHON_VERSION: "3.8-buster"
-    OUTPUT_TAG_NAME: "3.8-buster"
-    DOCKERFILE: "Dockerfile"
-  script: *build_job
+      - BASE_IMAGE: python
+        PYTHON_VERSION: "3.10-buster"
+        OUTPUT_TAG_NAME: "3.10-buster"
+        DOCKERFILE: "Dockerfile"
 
-build_python39_buster:
-  tags:
-    - docker-compose
-  variables:
-    BASE_IMAGE: python
-    PYTHON_VERSION: "3.9-buster"
-    OUTPUT_TAG_NAME: "3.9-buster"
-    DOCKERFILE: "Dockerfile"
-  script: *build_job
+      # Bullseye builds
+      - BASE_IMAGE: python
+        PYTHON_VERSION: "3.7-bullseye"
+        OUTPUT_TAG_NAME: "3.7"
+        DOCKERFILE: "Dockerfile"
 
+      - BASE_IMAGE: python
+        PYTHON_VERSION: "3.8-bullseye"
+        OUTPUT_TAG_NAME: "3.8"
+        DOCKERFILE: "Dockerfile"
 
+      - BASE_IMAGE: python
+        PYTHON_VERSION: "3.9-bullseye"
+        OUTPUT_TAG_NAME: "3.9"
+        DOCKERFILE: "Dockerfile"
 
-build_python37_bullseye:
-  tags:
-    - docker-compose
-  variables:
-    BASE_IMAGE: python
-    PYTHON_VERSION: "3.7-bullseye"
-    OUTPUT_TAG_NAME: "3.7"
-    DOCKERFILE: "Dockerfile"
-  script: *build_job
+      - BASE_IMAGE: python
+        PYTHON_VERSION: "3.10-bullseye"
+        OUTPUT_TAG_NAME: "3.10"
+        DOCKERFILE: "Dockerfile"
 
-build_python38_bullseye:
-  tags:
-    - docker-compose
-  variables:
-    BASE_IMAGE: python
-    PYTHON_VERSION: "3.8-bullseye"
-    OUTPUT_TAG_NAME: "3.8"
-    DOCKERFILE: "Dockerfile"
-  script: *build_job
+      # Slim builds
+      - BASE_IMAGE: python
+        PYTHON_VERSION: "3.7-slim-buster"
+        OUTPUT_TAG_NAME: "3.7-slim"
+        DOCKERFILE: "Dockerfile.slim"
 
-build_python39_bullseye:
-  tags:
-    - docker-compose
-  variables:
-    BASE_IMAGE: python
-    PYTHON_VERSION: "3.9-bullseye"
-    OUTPUT_TAG_NAME: "3.9"
-    DOCKERFILE: "Dockerfile"
-  script: *build_job
+      - BASE_IMAGE: python
+        PYTHON_VERSION: "3.8-slim-buster"
+        OUTPUT_TAG_NAME: "3.8-slim"
+        DOCKERFILE: "Dockerfile.slim"
 
+      - BASE_IMAGE: python
+        PYTHON_VERSION: "3.9-slim-buster"
+        OUTPUT_TAG_NAME: "3.9-slim"
+        DOCKERFILE: "Dockerfile.slim"
 
-
-build_python37_slim:
-  tags:
-    - docker-compose
-  variables:
-    BASE_IMAGE: python
-    PYTHON_VERSION: "3.7-slim-buster"
-    OUTPUT_TAG_NAME: "3.7-slim"
-    DOCKERFILE: "Dockerfile.slim"
-  script: *build_job
-
-build_python38_slim:
-  tags:
-    - docker-compose
-  variables:
-    BASE_IMAGE: python
-    PYTHON_VERSION: "3.8-slim-buster"
-    OUTPUT_TAG_NAME: "3.8-slim"
-    DOCKERFILE: "Dockerfile.slim"
-  script: *build_job
-
-build_python39_slim:
-  tags:
-    - docker-compose
-  variables:
-    BASE_IMAGE: python
-    PYTHON_VERSION: "3.9-slim-buster"
-    OUTPUT_TAG_NAME: "3.9-slim"
-    DOCKERFILE: "Dockerfile.slim"
-  script: *build_job
-
-
-
-# build_pypy36:
-#   tags:
-#     - docker-compose
-#   variables:
-#     BASE_IMAGE: pypy
-#     PYTHON_VERSION: "3-6"
-#     OUTPUT_TAG_NAME: "3.6-pypy"
-#     DOCKERFILE: "Dockerfile"
-#   script: *build_job
-
-# build_pypy37:
-#   tags:
-#     - docker-compose
-#   variables:
-#     BASE_IMAGE: pypy
-#     PYTHON_VERSION: "3-7"
-#     OUTPUT_TAG_NAME: "3.7-pypy"
-#     DOCKERFILE: "Dockerfile"
-#   script: *build_job
+      - BASE_IMAGE: python
+        PYTHON_VERSION: "3.10-slim-buster"
+        OUTPUT_TAG_NAME: "3.10-slim"
+        DOCKERFILE: "Dockerfile.slim"
