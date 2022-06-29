@@ -16,6 +16,10 @@ build:
     - docker login -u "${CI_REGISTRY_USER}" -p "${CI_JOB_TOKEN}" "${CI_REGISTRY}"
     - docker pull "${BASE_IMAGE}:${PYTHON_VERSION}" || true
 
+    # Install QEMU emulation support in the kernel
+    # See: https://docs.docker.com/buildx/working-with-buildx/#build-multi-platform-images
+    - docker run --privileged --rm tonistiigi/binfmt --install all
+
     # Create a buildx instance if one doesn't already exist
     - if [ "$(docker buildx ls | grep docker-container  | wc -l)" -le "0" ]; then
         docker buildx create --use;

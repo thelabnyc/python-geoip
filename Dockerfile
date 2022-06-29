@@ -61,7 +61,12 @@ RUN poetry config virtualenvs.create false
 # Optionally install Geospatial libraries
 ARG GEOSPATIAL
 RUN if [ "$GEOSPATIAL" = "true" ]; then \
+        export DEBIAN_FRONTEND=noninteractive; \
         apt-get update; \
-        apt-get install -y binutils libproj-dev gdal-bin; \
+        apt-get install -yq \
+            binutils \
+            libproj-dev \
+            gdal-bin; \
         rm -rf /var/lib/apt/lists/*; \
+        unset DEBIAN_FRONTEND; \
     fi
