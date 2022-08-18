@@ -7,11 +7,6 @@ build:
   services:
     - docker:dind
 
-  before_script:
-    # Experiment w/ qemu version
-    - docker run --privileged --rm tonistiigi/binfmt --install all
-    # End experiment
-
   script:
     - docker login -u "${CI_REGISTRY_USER}" -p "${CI_JOB_TOKEN}" "${CI_REGISTRY}"
     - docker pull "${BASE_IMAGE}:${PYTHON_VERSION}" || true
@@ -33,7 +28,7 @@ build:
         --build-arg MAXMIND_LICENSE_KEY=$MAXMIND_LICENSE_KEY
         --cache-from "${CI_REGISTRY_IMAGE}:${OUTPUT_TAG_NAME}"
         --tag "${CI_REGISTRY_IMAGE}:${OUTPUT_TAG_NAME}"
-        --file $DOCKERFILE .
+        --file Dockerfile .
         --push
 
     - docker buildx build
@@ -45,70 +40,35 @@ build:
         --build-arg GEOSPATIAL=true
         --cache-from "${CI_REGISTRY_IMAGE}:${OUTPUT_TAG_NAME}"
         --tag "${CI_REGISTRY_IMAGE}:${OUTPUT_TAG_NAME}-geospatial"
-        --file $DOCKERFILE .
+        --file Dockerfile .
         --push
 
   parallel:
     matrix:
-      # Buster builds
-      - BASE_IMAGE: python
-        PYTHON_VERSION: "3.7-buster"
-        OUTPUT_TAG_NAME: "3.7-buster"
-        DOCKERFILE: "Dockerfile"
-
-      - BASE_IMAGE: python
-        PYTHON_VERSION: "3.8-buster"
-        OUTPUT_TAG_NAME: "3.8-buster"
-        DOCKERFILE: "Dockerfile"
-
-      - BASE_IMAGE: python
-        PYTHON_VERSION: "3.9-buster"
+      # Buster + Python
+      - BASE_IMAGE: registry.gitlab.com/thelabnyc/python:py39-buster
         OUTPUT_TAG_NAME: "3.9-buster"
-        DOCKERFILE: "Dockerfile"
 
-      - BASE_IMAGE: python
-        PYTHON_VERSION: "3.10-buster"
+      - BASE_IMAGE: registry.gitlab.com/thelabnyc/python:py310-buster
         OUTPUT_TAG_NAME: "3.10-buster"
-        DOCKERFILE: "Dockerfile"
 
-      # Bullseye builds
-      - BASE_IMAGE: python
-        PYTHON_VERSION: "3.7-bullseye"
-        OUTPUT_TAG_NAME: "3.7"
-        DOCKERFILE: "Dockerfile"
+      # Buster + Python + Node
+      - BASE_IMAGE: registry.gitlab.com/thelabnyc/python:py39-node18-buster
+        OUTPUT_TAG_NAME: "3.9-node18-buster"
 
-      - BASE_IMAGE: python
-        PYTHON_VERSION: "3.8-bullseye"
-        OUTPUT_TAG_NAME: "3.8"
-        DOCKERFILE: "Dockerfile"
+      - BASE_IMAGE: registry.gitlab.com/thelabnyc/python:py310-node18-buster
+        OUTPUT_TAG_NAME: "3.10-node18-buster"
 
-      - BASE_IMAGE: python
-        PYTHON_VERSION: "3.9-bullseye"
+      # Bullseye + Python
+      - BASE_IMAGE: registry.gitlab.com/thelabnyc/python:py39
         OUTPUT_TAG_NAME: "3.9"
-        DOCKERFILE: "Dockerfile"
 
-      - BASE_IMAGE: python
-        PYTHON_VERSION: "3.10-bullseye"
+      - BASE_IMAGE: registry.gitlab.com/thelabnyc/python:py310
         OUTPUT_TAG_NAME: "3.10"
-        DOCKERFILE: "Dockerfile"
 
-      # Slim builds
-      - BASE_IMAGE: python
-        PYTHON_VERSION: "3.7-slim-buster"
-        OUTPUT_TAG_NAME: "3.7-slim"
-        DOCKERFILE: "Dockerfile.slim"
+      # Bullseye + Python + Node
+      - BASE_IMAGE: registry.gitlab.com/thelabnyc/python:py39-node18
+        OUTPUT_TAG_NAME: "3.9-node18"
 
-      - BASE_IMAGE: python
-        PYTHON_VERSION: "3.8-slim-buster"
-        OUTPUT_TAG_NAME: "3.8-slim"
-        DOCKERFILE: "Dockerfile.slim"
-
-      - BASE_IMAGE: python
-        PYTHON_VERSION: "3.9-slim-buster"
-        OUTPUT_TAG_NAME: "3.9-slim"
-        DOCKERFILE: "Dockerfile.slim"
-
-      - BASE_IMAGE: python
-        PYTHON_VERSION: "3.10-slim-buster"
-        OUTPUT_TAG_NAME: "3.10-slim"
-        DOCKERFILE: "Dockerfile.slim"
+      - BASE_IMAGE: registry.gitlab.com/thelabnyc/python:py310-node18
+        OUTPUT_TAG_NAME: "3.10-node18"

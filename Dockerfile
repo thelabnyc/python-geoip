@@ -1,6 +1,5 @@
-ARG BASE_IMAGE=python
-ARG PYTHON_VERSION=3.6
-FROM ${BASE_IMAGE}:${PYTHON_VERSION}
+ARG BASE_IMAGE=registry.gitlab.com/thelabnyc/python:py310
+FROM ${BASE_IMAGE}
 
 # Environment Settings
 ENV GEOIP_PATH "/data/geo"
@@ -37,7 +36,6 @@ RUN cd "$GEOIP_PATH" && \
     rmdir $GEOIP_PATH/GeoLite2-Country_* && \
     rm "$GEOIP_PATH/$GEOIP_COUNTRY.tar.gz"
 
-
 # Download and unzip the GeoIP2 City database
 RUN cd "$GEOIP_PATH" && \
     wget --quiet "https://download.maxmind.com/app/geoip_download?edition_id=GeoLite2-City&license_key=$MAXMIND_LICENSE_KEY&suffix=tar.gz" -O "$GEOIP_CITY.tar.gz" && \
@@ -51,12 +49,6 @@ RUN pip install --no-cache-dir --upgrade "geoip2"
 
 # Install IPython, because it's nice to have
 RUN pip install --no-cache-dir --upgrade "ipython"
-
-# Install Poetry for dependency management
-ENV POETRY_VERSION "1.1.13"
-RUN curl -sSL https://install.python-poetry.org | python3 -
-ENV PATH "/root/.local/bin:${PATH}"
-RUN poetry config virtualenvs.create false
 
 # Optionally install Geospatial libraries
 ARG GEOSPATIAL
