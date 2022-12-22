@@ -52,12 +52,18 @@ build:
       - BASE_IMAGE: registry.gitlab.com/thelabnyc/python:py310-buster
         OUTPUT_TAG_NAME: "3.10-buster"
 
+      - BASE_IMAGE: registry.gitlab.com/thelabnyc/python:py311-buster
+        OUTPUT_TAG_NAME: "3.11-buster"
+
       # Buster + Python + Node
       - BASE_IMAGE: registry.gitlab.com/thelabnyc/python:py39-node18-buster
         OUTPUT_TAG_NAME: "3.9-node18-buster"
 
       - BASE_IMAGE: registry.gitlab.com/thelabnyc/python:py310-node18-buster
         OUTPUT_TAG_NAME: "3.10-node18-buster"
+
+      - BASE_IMAGE: registry.gitlab.com/thelabnyc/python:py311-node18-buster
+        OUTPUT_TAG_NAME: "3.11-node18-buster"
 
       # Bullseye + Python
       - BASE_IMAGE: registry.gitlab.com/thelabnyc/python:py39
@@ -66,9 +72,15 @@ build:
       - BASE_IMAGE: registry.gitlab.com/thelabnyc/python:py310
         OUTPUT_TAG_NAME: "3.10"
 
+      - BASE_IMAGE: registry.gitlab.com/thelabnyc/python:py311
+        OUTPUT_TAG_NAME: "3.11"
+
       # Bullseye + Python + Node
       - BASE_IMAGE: registry.gitlab.com/thelabnyc/python:py39-node18
         OUTPUT_TAG_NAME: "3.9-node18"
 
       - BASE_IMAGE: registry.gitlab.com/thelabnyc/python:py310-node18
         OUTPUT_TAG_NAME: "3.10-node18"
+
+      - BASE_IMAGE: registry.gitlab.com/thelabnyc/python:py311-node18
+        OUTPUT_TAG_NAME: "3.11-node18"
