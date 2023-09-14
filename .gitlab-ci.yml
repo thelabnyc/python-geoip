@@ -45,27 +45,7 @@ build:
 
   parallel:
     matrix:
-      # Buster + Python
-      - BASE_IMAGE: registry.gitlab.com/thelabnyc/python:py39-buster
-        OUTPUT_TAG_NAME: "3.9-buster"
-
-      - BASE_IMAGE: registry.gitlab.com/thelabnyc/python:py310-buster
-        OUTPUT_TAG_NAME: "3.10-buster"
-
-      - BASE_IMAGE: registry.gitlab.com/thelabnyc/python:py311-buster
-        OUTPUT_TAG_NAME: "3.11-buster"
-
-      # Buster + Python + Node
-      - BASE_IMAGE: registry.gitlab.com/thelabnyc/python:py39-node18-buster
-        OUTPUT_TAG_NAME: "3.9-node18-buster"
-
-      - BASE_IMAGE: registry.gitlab.com/thelabnyc/python:py310-node18-buster
-        OUTPUT_TAG_NAME: "3.10-node18-buster"
-
-      - BASE_IMAGE: registry.gitlab.com/thelabnyc/python:py311-node18-buster
-        OUTPUT_TAG_NAME: "3.11-node18-buster"
-
-      # Bullseye + Python
+      # Python
       - BASE_IMAGE: registry.gitlab.com/thelabnyc/python:py39
         OUTPUT_TAG_NAME: "3.9"
 
@@ -75,7 +55,7 @@ build:
       - BASE_IMAGE: registry.gitlab.com/thelabnyc/python:py311
         OUTPUT_TAG_NAME: "3.11"
 
-      # Bullseye + Python + Node
+      # Python + Node 18
       - BASE_IMAGE: registry.gitlab.com/thelabnyc/python:py39-node18
         OUTPUT_TAG_NAME: "3.9-node18"
 
@@ -84,3 +64,13 @@ build:
 
       - BASE_IMAGE: registry.gitlab.com/thelabnyc/python:py311-node18
         OUTPUT_TAG_NAME: "3.11-node18"
+
+      # Python + Node 20
+      - BASE_IMAGE: registry.gitlab.com/thelabnyc/python:py39-node20
+        OUTPUT_TAG_NAME: "3.9-node20"
+
+      - BASE_IMAGE: registry.gitlab.com/thelabnyc/python:py310-node20
+        OUTPUT_TAG_NAME: "3.10-node20"
+
+      - BASE_IMAGE: registry.gitlab.com/thelabnyc/python:py311-node20
+        OUTPUT_TAG_NAME: "3.11-node20"
