@@ -2,7 +2,21 @@ variables:
   PLATFORMS: "linux/arm64/v8,linux/amd64"
   DOCKER_BUILDKIT: "1"
 
+download_db:
+  image: ubuntu:latest
+  script:
+    - mkdir -p ./data
+    - wget --quiet "https://download.maxmind.com/app/geoip_download?edition_id=GeoLite2-Country&license_key=$MAXMIND_LICENSE_KEY&suffix=tar.gz" -O "data/GeoLite2-Country.mmdb.tar.gz"
+    - wget --quiet "https://download.maxmind.com/app/geoip_download?edition_id=GeoLite2-City&license_key=$MAXMIND_LICENSE_KEY&suffix=tar.gz" -O "data/GeoLite2-City.mmdb.tar.gz"
+  artifacts:
+    paths:
+      - data/*
+
 build:
+  needs:
+    - job: download_db
+      artifacts: true
+
   image: docker:latest
   services:
     - docker:dind
@@ -25,7 +39,6 @@ build:
         --pull
         --build-arg BASE_IMAGE=$BASE_IMAGE
         --build-arg PYTHON_VERSION=$PYTHON_VERSION
-        --build-arg MAXMIND_LICENSE_KEY=$MAXMIND_LICENSE_KEY
         --cache-from "${CI_REGISTRY_IMAGE}:${OUTPUT_TAG_NAME}"
         --tag "${CI_REGISTRY_IMAGE}:${OUTPUT_TAG_NAME}"
         --file Dockerfile .
@@ -36,7 +49,6 @@ build:
         --pull
         --build-arg BASE_IMAGE=$BASE_IMAGE
         --build-arg PYTHON_VERSION=$PYTHON_VERSION
-        --build-arg MAXMIND_LICENSE_KEY=$MAXMIND_LICENSE_KEY
         --build-arg GEOSPATIAL=true
         --cache-from "${CI_REGISTRY_IMAGE}:${OUTPUT_TAG_NAME}"
         --tag "${CI_REGISTRY_IMAGE}:${OUTPUT_TAG_NAME}-geospatial"
@@ -46,31 +58,31 @@ build:
   parallel:
     matrix:
       # Python
-      - BASE_IMAGE: registry.gitlab.com/thelabnyc/python:py39
-        OUTPUT_TAG_NAME: "3.9"
-
       - BASE_IMAGE: registry.gitlab.com/thelabnyc/python:py310
         OUTPUT_TAG_NAME: "3.10"
 
       - BASE_IMAGE: registry.gitlab.com/thelabnyc/python:py311
         OUTPUT_TAG_NAME: "3.11"
 
-      # Python + Node 18
-      - BASE_IMAGE: registry.gitlab.com/thelabnyc/python:py39-node18
-        OUTPUT_TAG_NAME: "3.9-node18"
+      - BASE_IMAGE: registry.gitlab.com/thelabnyc/python:py312
+        OUTPUT_TAG_NAME: "3.12"
 
+      # Python + Node 18
       - BASE_IMAGE: registry.gitlab.com/thelabnyc/python:py310-node18
         OUTPUT_TAG_NAME: "3.10-node18"
 
       - BASE_IMAGE: registry.gitlab.com/thelabnyc/python:py311-node18
         OUTPUT_TAG_NAME: "3.11-node18"
 
-      # Python + Node 20
-      - BASE_IMAGE: registry.gitlab.com/thelabnyc/python:py39-node20
-        OUTPUT_TAG_NAME: "3.9-node20"
+      - BASE_IMAGE: registry.gitlab.com/thelabnyc/python:py312-node18
+        OUTPUT_TAG_NAME: "3.12-node18"
 
+      # Python + Node 20
       - BASE_IMAGE: registry.gitlab.com/thelabnyc/python:py310-node20
         OUTPUT_TAG_NAME: "3.10-node20"
 
       - BASE_IMAGE: registry.gitlab.com/thelabnyc/python:py311-node20
         OUTPUT_TAG_NAME: "3.11-node20"
+
+      - BASE_IMAGE: registry.gitlab.com/thelabnyc/python:py312-node20
+        OUTPUT_TAG_NAME: "3.12-node20"
