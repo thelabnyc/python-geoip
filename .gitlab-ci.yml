@@ -5,9 +5,11 @@ variables:
 download_db:
   image: ubuntu:latest
   script:
+    - apt-get update
+    - apt-get install -y wget
     - mkdir -p ./data
-    - wget --quiet "https://download.maxmind.com/app/geoip_download?edition_id=GeoLite2-Country&license_key=$MAXMIND_LICENSE_KEY&suffix=tar.gz" -O "data/GeoLite2-Country.mmdb.tar.gz"
-    - wget --quiet "https://download.maxmind.com/app/geoip_download?edition_id=GeoLite2-City&license_key=$MAXMIND_LICENSE_KEY&suffix=tar.gz" -O "data/GeoLite2-City.mmdb.tar.gz"
+    - wget "https://download.maxmind.com/app/geoip_download?edition_id=GeoLite2-Country&license_key=$MAXMIND_LICENSE_KEY&suffix=tar.gz" -O "data/GeoLite2-Country.mmdb.tar.gz"
+    - wget "https://download.maxmind.com/app/geoip_download?edition_id=GeoLite2-City&license_key=$MAXMIND_LICENSE_KEY&suffix=tar.gz" -O "data/GeoLite2-City.mmdb.tar.gz"
   artifacts:
     paths:
       - data/*
