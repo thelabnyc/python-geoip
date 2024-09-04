@@ -70,16 +70,6 @@ build:
       - BASE_IMAGE: registry.gitlab.com/thelabnyc/python:py312
         OUTPUT_TAG_NAME: "3.12"
 
-      # Python + Node 18
-      - BASE_IMAGE: registry.gitlab.com/thelabnyc/python:py310-node18
-        OUTPUT_TAG_NAME: "3.10-node18"
-
-      - BASE_IMAGE: registry.gitlab.com/thelabnyc/python:py311-node18
-        OUTPUT_TAG_NAME: "3.11-node18"
-
-      - BASE_IMAGE: registry.gitlab.com/thelabnyc/python:py312-node18
-        OUTPUT_TAG_NAME: "3.12-node18"
-
       # Python + Node 20
       - BASE_IMAGE: registry.gitlab.com/thelabnyc/python:py310-node20
         OUTPUT_TAG_NAME: "3.10-node20"
