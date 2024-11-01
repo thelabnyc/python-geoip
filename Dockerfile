@@ -1,4 +1,4 @@
-ARG BASE_IMAGE=registry.gitlab.com/thelabnyc/python:py312
+ARG BASE_IMAGE=registry.gitlab.com/thelabnyc/python:py313
 FROM ${BASE_IMAGE}
 
 # Environment Settings
