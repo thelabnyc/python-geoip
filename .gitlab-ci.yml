@@ -79,3 +79,7 @@ build:
 
       - BASE_IMAGE: registry.gitlab.com/thelabnyc/python:py313-node20
         OUTPUT_TAG_NAME: "3.13-node20"
+
+      # Python + Node 22
+      - BASE_IMAGE: registry.gitlab.com/thelabnyc/python:py313-node22
+        OUTPUT_TAG_NAME: "3.13-node22"
