@@ -1,4 +1,21 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": ["gitlab>thelabnyc/renovate-config:application"]
+  "extends": ["gitlab>thelabnyc/renovate-config:application"],
+  "customManagers": [
+    {
+      "customType": "regex",
+      "fileMatch": [".gitlab-ci.yml$"],
+      "matchStrings": ["registry\\.gitlab\\.com\\/thelabnyc\\/python\\:(?<currentValue>.+)"],
+      "datasourceTemplate": "docker",
+      "packageNameTemplate": "registry.gitlab.com/thelabnyc/python",
+      "versioningTemplate": "docker"
+    }
+  ],
+  "packageRules": [
+    {
+      "matchUpdateTypes": ["major", "minor"],
+      "matchPackageNames": ["registry.gitlab.com/thelabnyc/python"],
+      "enabled": false
+    }
+  ]
 }

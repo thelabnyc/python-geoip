@@ -25,7 +25,7 @@ build:
 
   script:
     - docker login -u "${CI_REGISTRY_USER}" -p "${CI_JOB_TOKEN}" "${CI_REGISTRY}"
-    - docker pull "${BASE_IMAGE}:${PYTHON_VERSION}" || true
+    - docker pull "${BASE_IMAGE}" || true
 
     # Install QEMU emulation support in the kernel
     # See: https://docs.docker.com/buildx/working-with-buildx/#build-multi-platform-images
@@ -41,7 +41,6 @@ build:
         --platform "$PLATFORMS"
         --pull
         --build-arg BASE_IMAGE=$BASE_IMAGE
-        --build-arg PYTHON_VERSION=$PYTHON_VERSION
         --cache-from "${CI_REGISTRY_IMAGE}:${OUTPUT_TAG_NAME}"
         --tag "${CI_REGISTRY_IMAGE}:${OUTPUT_TAG_NAME}"
         --file Dockerfile .
@@ -51,7 +50,6 @@ build:
         --platform "$PLATFORMS"
         --pull
         --build-arg BASE_IMAGE=$BASE_IMAGE
-        --build-arg PYTHON_VERSION=$PYTHON_VERSION
         --build-arg GEOSPATIAL=true
         --cache-from "${CI_REGISTRY_IMAGE}:${OUTPUT_TAG_NAME}"
         --tag "${CI_REGISTRY_IMAGE}:${OUTPUT_TAG_NAME}-geospatial"
