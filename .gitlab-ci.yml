@@ -59,25 +59,25 @@ build:
   parallel:
     matrix:
       # Python
-      - BASE_IMAGE: registry.gitlab.com/thelabnyc/python:py311
+      - BASE_IMAGE: "registry.gitlab.com/thelabnyc/python:py311"
         OUTPUT_TAG_NAME: "3.11"
 
-      - BASE_IMAGE: registry.gitlab.com/thelabnyc/python:py312
+      - BASE_IMAGE: "registry.gitlab.com/thelabnyc/python:py312"
         OUTPUT_TAG_NAME: "3.12"
 
-      - BASE_IMAGE: registry.gitlab.com/thelabnyc/python:py313
+      - BASE_IMAGE: "registry.gitlab.com/thelabnyc/python:py313"
         OUTPUT_TAG_NAME: "3.13"
 
       # Python + Node 20
-      - BASE_IMAGE: registry.gitlab.com/thelabnyc/python:py311-node20
+      - BASE_IMAGE: "registry.gitlab.com/thelabnyc/python:py311-node20"
         OUTPUT_TAG_NAME: "3.11-node20"
 
-      - BASE_IMAGE: registry.gitlab.com/thelabnyc/python:py312-node20
+      - BASE_IMAGE: "registry.gitlab.com/thelabnyc/python:py312-node20"
         OUTPUT_TAG_NAME: "3.12-node20"
 
-      - BASE_IMAGE: registry.gitlab.com/thelabnyc/python:py313-node20
+      - BASE_IMAGE: "registry.gitlab.com/thelabnyc/python:py313-node20"
         OUTPUT_TAG_NAME: "3.13-node20"
 
       # Python + Node 22
-      - BASE_IMAGE: registry.gitlab.com/thelabnyc/python:py313-node22
+      - BASE_IMAGE: "registry.gitlab.com/thelabnyc/python:py313-node22"
         OUTPUT_TAG_NAME: "3.13-node22"
