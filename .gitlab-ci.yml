@@ -23,6 +23,15 @@ build:
   services:
     - docker:dind@sha256:f49e1c71b5d9f8ebe53715f78996ce42b8be4b1ec03875d187dfe3c03de1dc00
 
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+      variables:
+        TAG_SUFFIX: "-mr${CI_MERGE_REQUEST_IID}"
+    # No suffux for default branch
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH && $CI_COMMIT_REF_PROTECTED == "true"
+      variables:
+        TAG_SUFFIX: ""
+
   script:
     - docker login -u "${CI_REGISTRY_USER}" -p "${CI_JOB_TOKEN}" "${CI_REGISTRY}"
     - docker pull "${BASE_IMAGE}" || true
@@ -41,8 +50,8 @@ build:
         --platform "$PLATFORMS"
         --pull
         --build-arg BASE_IMAGE=$BASE_IMAGE
-        --cache-from "${CI_REGISTRY_IMAGE}:${OUTPUT_TAG_NAME}"
-        --tag "${CI_REGISTRY_IMAGE}:${OUTPUT_TAG_NAME}"
+        --cache-from "${CI_REGISTRY_IMAGE}:${OUTPUT_TAG_NAME}${TAG_SUFFIX}"
+        --tag "${CI_REGISTRY_IMAGE}:${OUTPUT_TAG_NAME}${TAG_SUFFIX}"
         --file Dockerfile .
         --push
 
@@ -51,8 +60,8 @@ build:
         --pull
         --build-arg BASE_IMAGE=$BASE_IMAGE
         --build-arg GEOSPATIAL=true
-        --cache-from "${CI_REGISTRY_IMAGE}:${OUTPUT_TAG_NAME}"
-        --tag "${CI_REGISTRY_IMAGE}:${OUTPUT_TAG_NAME}-geospatial"
+        --cache-from "${CI_REGISTRY_IMAGE}:${OUTPUT_TAG_NAME}${TAG_SUFFIX}"
+        --tag "${CI_REGISTRY_IMAGE}:${OUTPUT_TAG_NAME}-geospatial${TAG_SUFFIX}"
         --file Dockerfile .
         --push
 
