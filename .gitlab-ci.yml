@@ -2,7 +2,18 @@ variables:
   PLATFORMS: "linux/arm64/v8,linux/amd64"
   DOCKER_BUILDKIT: "1"
 
+.base_job: &base_job
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+      variables:
+        TAG_SUFFIX: "-mr${CI_MERGE_REQUEST_IID}"
+    # No suffux for default branch
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH && $CI_COMMIT_REF_PROTECTED == "true"
+      variables:
+        TAG_SUFFIX: ""
+
 download_db:
+  <<: *base_job
   image: ubuntu:latest@sha256:1e622c5f073b4f6bfad6632f2616c7f59ef256e96fe78bf6a595d1dc4376ac02
   script:
     - apt-get update
@@ -15,23 +26,13 @@ download_db:
       - data/*
 
 build:
+  <<: *base_job
   needs:
     - job: download_db
       artifacts: true
-
   image: docker:latest@sha256:f49e1c71b5d9f8ebe53715f78996ce42b8be4b1ec03875d187dfe3c03de1dc00
   services:
     - docker:dind@sha256:f49e1c71b5d9f8ebe53715f78996ce42b8be4b1ec03875d187dfe3c03de1dc00
-
-  rules:
-    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
-      variables:
-        TAG_SUFFIX: "-mr${CI_MERGE_REQUEST_IID}"
-    # No suffux for default branch
-    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH && $CI_COMMIT_REF_PROTECTED == "true"
-      variables:
-        TAG_SUFFIX: ""
-
   script:
     - docker login -u "${CI_REGISTRY_USER}" -p "${CI_JOB_TOKEN}" "${CI_REGISTRY}"
     - docker pull "${BASE_IMAGE}" || true
