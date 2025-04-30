@@ -69,25 +69,25 @@ build:
   parallel:
     matrix:
       # Python
-      - BASE_IMAGE: "registry.gitlab.com/thelabnyc/python:py311@sha256:655fc40ea10abcaacb946fcb23facf98fb85092ae3d0487c8e793b20dd1285fa"
+      - BASE_IMAGE: "registry.gitlab.com/thelabnyc/python:py311@sha256:96aea2b95bcd4835f6f07ac1540dcba3199a27c7b17c720023374c1be305865d"
         OUTPUT_TAG_NAME: "3.11"
 
-      - BASE_IMAGE: "registry.gitlab.com/thelabnyc/python:py312@sha256:5391969b04ee39d76fbfe7a85bdbceed1a527d95e5d816e0ef58bcb590750950"
+      - BASE_IMAGE: "registry.gitlab.com/thelabnyc/python:py312@sha256:6d5079f69b7146ce732192952f888ed440c15b74c4416753fd276257cc6f7cbc"
         OUTPUT_TAG_NAME: "3.12"
 
-      - BASE_IMAGE: "registry.gitlab.com/thelabnyc/python:py313@sha256:efecf1d54180e040a131baaed3a12437ec8f3510372e87d7d9d4919d145db10e"
+      - BASE_IMAGE: "registry.gitlab.com/thelabnyc/python:py313@sha256:06acdbcbdbcab477a36d268b35fecaa79d1632422bb4547058610531248ce76a"
         OUTPUT_TAG_NAME: "3.13"
 
       # Python + Node 20
-      - BASE_IMAGE: "registry.gitlab.com/thelabnyc/python:py311-node20@sha256:0d46fbe78ab6cccc897e8e6a23481263b6884918c3d5ce80ac5ebba7814d5dba"
+      - BASE_IMAGE: "registry.gitlab.com/thelabnyc/python:py311-node20@sha256:4ac4b72dc4c7b4cb0bfe49e88afba278bc318913659f087c133a69f4233d2f48"
         OUTPUT_TAG_NAME: "3.11-node20"
 
-      - BASE_IMAGE: "registry.gitlab.com/thelabnyc/python:py312-node20@sha256:bd9987d287eea4662ab1062b2f07fbd13ea5607d608d586223e9b0482edbd532"
+      - BASE_IMAGE: "registry.gitlab.com/thelabnyc/python:py312-node20@sha256:7ddf52f104597a338995d35f837f92aca7b49259dc56071226a8a479a8c75ce8"
         OUTPUT_TAG_NAME: "3.12-node20"
 
-      - BASE_IMAGE: "registry.gitlab.com/thelabnyc/python:py313-node20@sha256:e33f9212025598146602d4d21af9cdda763ad1f8fbcf1f67125dac7975399180"
+      - BASE_IMAGE: "registry.gitlab.com/thelabnyc/python:py313-node20@sha256:f0a562f54520f148e8507896c55db12e586f37953b16b59bc9c6f1b357c535e7"
         OUTPUT_TAG_NAME: "3.13-node20"
 
       # Python + Node 22
-      - BASE_IMAGE: "registry.gitlab.com/thelabnyc/python:py313-node22@sha256:88793d5ae789a9976b3d83e87dbab4be9b4918802ce6027dc19696d78e6afdac"
+      - BASE_IMAGE: "registry.gitlab.com/thelabnyc/python:py313-node22@sha256:6883fd3adc8160b83354a26b2503b2d95d96827c1f7b3b8869b6566bbcdf4561"
         OUTPUT_TAG_NAME: "3.13-node22"
