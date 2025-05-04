@@ -1,11 +1,17 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": ["gitlab>thelabnyc/renovate-config:application"],
+  "extends": [
+    "gitlab>thelabnyc/renovate-config:application"
+  ],
   "customManagers": [
     {
       "customType": "regex",
-      "fileMatch": ["\\.gitlab-ci\\.yml$"],
-      "matchStrings": ["BASE_IMAGE: \"registry\\.gitlab\\.com\\/thelabnyc\\/python:(?<currentValue>[^\\s@]+)(@(?<currentDigest>sha256:[0-9a-f]+))?\""],
+      "managerFilePatterns": [
+        "/\\.gitlab-ci\\.yml$/"
+      ],
+      "matchStrings": [
+        "BASE_IMAGE: \"registry\\.gitlab\\.com\\/thelabnyc\\/python:(?<currentValue>[^\\s@]+)(@(?<currentDigest>sha256:[0-9a-f]+))?\""
+      ],
       "datasourceTemplate": "docker",
       "depNameTemplate": "registry.gitlab.com/thelabnyc/python",
       "versioningTemplate": "docker"
@@ -13,8 +19,13 @@
   ],
   "packageRules": [
     {
-      "matchUpdateTypes": ["major", "minor"],
-      "matchPackageNames": ["registry.gitlab.com/thelabnyc/python"],
+      "matchUpdateTypes": [
+        "major",
+        "minor"
+      ],
+      "matchPackageNames": [
+        "registry.gitlab.com/thelabnyc/python"
+      ],
       "enabled": false
     }
   ]
