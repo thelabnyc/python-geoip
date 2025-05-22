@@ -30,7 +30,7 @@ build:
   needs:
     - job: download_db
       artifacts: true
-  image: docker:latest@sha256:754710537aaeed765ba5218c56fe3b6d02a6091201eb43fe67c3fbc758d53e7d
+  image: docker:latest@sha256:e293493ad0083add2d14827c8b452b1da625745edd3cba27f154d0b11d0ec2d2
   services:
     - docker:dind@sha256:e293493ad0083add2d14827c8b452b1da625745edd3cba27f154d0b11d0ec2d2
   script:
