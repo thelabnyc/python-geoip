@@ -75,7 +75,7 @@ build:
       - BASE_IMAGE: "registry.gitlab.com/thelabnyc/python:3.12.660@sha256:7243952d35dd5642fa4adfa43ef943c52f48e8f7ca05e616e0fa78f7a3ebab41"
         OUTPUT_TAG_NAME: "3.12.${CI_PIPELINE_IID}"
 
-      - BASE_IMAGE: "registry.gitlab.com/thelabnyc/python:3.13.730@sha256:48ead35b07386d36b46420c486875cc8448690219158fd92f221546a6d4d4245"
+      - BASE_IMAGE: "registry.gitlab.com/thelabnyc/python:3.13.735@sha256:e794ee002a1f245454759642987379928978a56245adffeab029edb8a23a032f"
         OUTPUT_TAG_NAME: "3.13.${CI_PIPELINE_IID}"
 
       # Python + Node 20
@@ -85,9 +85,9 @@ build:
       - BASE_IMAGE: "registry.gitlab.com/thelabnyc/python:3.12.660-node20@sha256:0e9cdc57214f5587f404bccfc2c0c4553bb1681ec93929a0c479f11bba06f34f"
         OUTPUT_TAG_NAME: "3.12.${CI_PIPELINE_IID}-node20"
 
-      - BASE_IMAGE: "registry.gitlab.com/thelabnyc/python:3.13.730-node20@sha256:fa0b8bf284b4cbe3910584296ba7e16ddd5a4e9a22f5b79ac9e4cf3dba0c8cba"
+      - BASE_IMAGE: "registry.gitlab.com/thelabnyc/python:3.13.735-node20@sha256:3b142e41be214b5e56001be2e2deda33a5187aea01d5c0128654e9d194b8e6e1"
         OUTPUT_TAG_NAME: "3.13.${CI_PIPELINE_IID}-node20"
 
       # Python + Node 22
-      - BASE_IMAGE: "registry.gitlab.com/thelabnyc/python:3.13.730-node22@sha256:88a9c9fad057608438128e036eb35a0e7c4cce2a232e1ff22c0efb32590a96e3"
+      - BASE_IMAGE: "registry.gitlab.com/thelabnyc/python:3.13.735-node22@sha256:c7d8b3122bb735a1a35f8ef7374788e40eaab5e59401d3b0d31c0c57916c2fd6"
         OUTPUT_TAG_NAME: "3.13.${CI_PIPELINE_IID}-node22"
