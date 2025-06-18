@@ -32,7 +32,7 @@ build:
       artifacts: true
   image: docker:latest@sha256:ff052514f359111edd920b54581e7aca65629458607f9fbdbf82d7eefbe0602b
   services:
-    - docker:dind@sha256:ff052514f359111edd920b54581e7aca65629458607f9fbdbf82d7eefbe0602b
+    - docker:dind@sha256:17aa5b215f2b70bc0e456a87bcdd93e8774f133c73452df69d89606abc555270
   script:
     - docker login -u "${CI_REGISTRY_USER}" -p "${CI_JOB_TOKEN}" "${CI_REGISTRY}"
     - docker pull "${BASE_IMAGE}" || true
