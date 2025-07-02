@@ -1,32 +1,33 @@
 {
-  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": [
-    "gitlab>thelabnyc/renovate-config:application"
-  ],
-  "customManagers": [
-    {
-      "customType": "regex",
-      "managerFilePatterns": [
-        "/\\.gitlab-ci\\.yml$/"
-      ],
-      "matchStrings": [
-        "BASE_IMAGE: \"registry\\.gitlab\\.com\\/thelabnyc\\/python:(?<currentValue>[^\\s@]+)(@(?<currentDigest>sha256:[0-9a-f]+))?\""
-      ],
-      "datasourceTemplate": "docker",
-      "depNameTemplate": "registry.gitlab.com/thelabnyc/python",
-      "versioningTemplate": "docker"
-    }
-  ],
-  "packageRules": [
-    {
-      "matchUpdateTypes": [
-        "major",
-        "minor"
-      ],
-      "matchPackageNames": [
-        "registry.gitlab.com/thelabnyc/python"
-      ],
-      "enabled": false
-    }
-  ]
+    "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+    "extends": ["gitlab>thelabnyc/renovate-config:application"],
+    "customManagers": [
+        {
+            "customType": "regex",
+            "managerFilePatterns": ["/\\.gitlab-ci\\.yml$/"],
+            "matchStrings": [
+                "BASE_IMAGE: \"registry\\.gitlab\\.com\\/thelabnyc\\/python:(?<currentValue>[^\\s@]+)(@(?<currentDigest>sha256:[0-9a-f]+))?\""
+            ],
+            "datasourceTemplate": "docker",
+            "depNameTemplate": "registry.gitlab.com/thelabnyc/python",
+            "versioningTemplate": "docker"
+        },
+        {
+            "customType": "regex",
+            "managerFilePatterns": ["/Dockerfile$/"],
+            "matchStrings": [
+                "ENV LIBMAXMINDDB_VERSION=\"(?<currentValue>[^\\s@]+)\""
+            ],
+            "datasourceTemplate": "github-releases",
+            "packageNameTemplate": "maxmind/libmaxminddb",
+            "versioningTemplate": "deb"
+        }
+    ],
+    "packageRules": [
+        {
+            "matchUpdateTypes": ["major", "minor"],
+            "matchPackageNames": ["registry.gitlab.com/thelabnyc/python"],
+            "enabled": false
+        }
+    ]
 }
