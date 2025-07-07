@@ -5,7 +5,7 @@ FROM ${BASE_IMAGE}
 ENV GEOIP_PATH="/data/geo"
 ENV GEOIP_COUNTRY="GeoLite2-Country.mmdb"
 ENV GEOIP_CITY="GeoLite2-City.mmdb"
-ENV LIBMAXMINDDB_VERSION="1.6.0"
+ENV LIBMAXMINDDB_VERSION="1.12.2"
 
 # Create directories
 RUN mkdir -p "$GEOIP_PATH"
