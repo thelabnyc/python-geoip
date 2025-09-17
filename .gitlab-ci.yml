@@ -71,10 +71,6 @@ build:
   parallel:
     matrix:
       # Python
-      - BASE_IMAGE: "registry.gitlab.com/thelabnyc/python:3.11.660@sha256:8c170725365fd943160f72aaf5f39276f8009496bc700f3c2ba5e0412152db39"
-        MUTABLE_TAG_NAME: "3.11"
-        IMMUTABLE_TAG_NAME: "3.11.${CI_PIPELINE_IID}"
-
       - BASE_IMAGE: "registry.gitlab.com/thelabnyc/python:3.12.660@sha256:7243952d35dd5642fa4adfa43ef943c52f48e8f7ca05e616e0fa78f7a3ebab41"
         MUTABLE_TAG_NAME: "3.12"
         IMMUTABLE_TAG_NAME: "3.12.${CI_PIPELINE_IID}"
@@ -84,10 +80,6 @@ build:
         IMMUTABLE_TAG_NAME: "3.13.${CI_PIPELINE_IID}"
 
       # Python + Node 20
-      - BASE_IMAGE: "registry.gitlab.com/thelabnyc/python:3.11.660-node20@sha256:57d5625ff541fe498781cbda3c1253099c3b00b419b04a9f323ad8b143d03bef"
-        MUTABLE_TAG_NAME: "3.11-node20"
-        IMMUTABLE_TAG_NAME: "3.11.${CI_PIPELINE_IID}-node20"
-
       - BASE_IMAGE: "registry.gitlab.com/thelabnyc/python:3.12.660-node20@sha256:0e9cdc57214f5587f404bccfc2c0c4553bb1681ec93929a0c479f11bba06f34f"
         MUTABLE_TAG_NAME: "3.12-node20"
         IMMUTABLE_TAG_NAME: "3.12.${CI_PIPELINE_IID}-node20"
