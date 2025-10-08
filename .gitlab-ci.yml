@@ -94,6 +94,6 @@ build:
         IMMUTABLE_TAG_NAME: "3.13.${CI_PIPELINE_IID}-node22"
 
       # Python + Node 24
-      - BASE_IMAGE: "registry.gitlab.com/thelabnyc/python:3.13.993-node24@sha256:b207b5ccd5cf7e4c748899c952802cdb8d1a55fd54bfc097782b3c6e8be5acfd"
+      - BASE_IMAGE: "registry.gitlab.com/thelabnyc/python:3.13.996-node24@sha256:96a3ca6acf00e49647d6e58bae366a9dd17502a9e4a19bb362d07d49c5be064b"
         MUTABLE_TAG_NAME: "3.13-node24"
         IMMUTABLE_TAG_NAME: "3.13.${CI_PIPELINE_IID}-node24"
