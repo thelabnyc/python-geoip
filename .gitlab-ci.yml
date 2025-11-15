@@ -1,6 +1,7 @@
 variables:
   PLATFORMS: "linux/arm64/v8,linux/amd64"
   DOCKER_BUILDKIT: "1"
+  FF_NETWORK_PER_BUILD: "true"
 
 .base_job: &base_job
   rules:
