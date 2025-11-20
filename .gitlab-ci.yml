@@ -72,29 +72,24 @@ build:
   parallel:
     matrix:
       # Python
-      - BASE_IMAGE: "registry.gitlab.com/thelabnyc/python:3.12.660@sha256:7243952d35dd5642fa4adfa43ef943c52f48e8f7ca05e616e0fa78f7a3ebab41"
-        MUTABLE_TAG_NAME: "3.12"
-        IMMUTABLE_TAG_NAME: "3.12.${CI_PIPELINE_IID}"
-
-      - BASE_IMAGE: "registry.gitlab.com/thelabnyc/python:3.13.1120@sha256:3a021ce0e99a4ee83cab71f439d5d02bf5d85b2aa819a4fe47cbd8a91340fb28"
+      - BASE_IMAGE: "registry.gitlab.com/thelabnyc/python:3.13@sha256:3a021ce0e99a4ee83cab71f439d5d02bf5d85b2aa819a4fe47cbd8a91340fb28"
         MUTABLE_TAG_NAME: "3.13"
         IMMUTABLE_TAG_NAME: "3.13.${CI_PIPELINE_IID}"
 
-      # Python + Node 20
-      - BASE_IMAGE: "registry.gitlab.com/thelabnyc/python:3.12.660-node20@sha256:0e9cdc57214f5587f404bccfc2c0c4553bb1681ec93929a0c479f11bba06f34f"
-        MUTABLE_TAG_NAME: "3.12-node20"
-        IMMUTABLE_TAG_NAME: "3.12.${CI_PIPELINE_IID}-node20"
-
-      - BASE_IMAGE: "registry.gitlab.com/thelabnyc/python:3.13.1120-node20@sha256:b76bb3ff64e8aaf3898f07aeef9c16082de1566910a969cb1555056abd6cb187"
-        MUTABLE_TAG_NAME: "3.13-node20"
-        IMMUTABLE_TAG_NAME: "3.13.${CI_PIPELINE_IID}-node20"
+      - BASE_IMAGE: "registry.gitlab.com/thelabnyc/python:3.14@sha256:3ebff7128227829df9137429094aa25797479af9ffc8a86b68cdb8bcbf818492"
+        MUTABLE_TAG_NAME: "3.14"
+        IMMUTABLE_TAG_NAME: "3.14.${CI_PIPELINE_IID}"
 
       # Python + Node 22
-      - BASE_IMAGE: "registry.gitlab.com/thelabnyc/python:3.13.1120-node22@sha256:2b4e0d7e4b688dc0e6cb6fb94af6bf00dd85880106a5e2fb6d93f23c646c0711"
+      - BASE_IMAGE: "registry.gitlab.com/thelabnyc/python:3.13-node22@sha256:2b4e0d7e4b688dc0e6cb6fb94af6bf00dd85880106a5e2fb6d93f23c646c0711"
         MUTABLE_TAG_NAME: "3.13-node22"
         IMMUTABLE_TAG_NAME: "3.13.${CI_PIPELINE_IID}-node22"
 
       # Python + Node 24
-      - BASE_IMAGE: "registry.gitlab.com/thelabnyc/python:3.13.1120-node24@sha256:8ed067e9924e8e6f5408dcb379d2d6ce609e3f0cd18c8106a4617c2d23969b4b"
+      - BASE_IMAGE: "registry.gitlab.com/thelabnyc/python:3.13-node24@sha256:8ed067e9924e8e6f5408dcb379d2d6ce609e3f0cd18c8106a4617c2d23969b4b"
         MUTABLE_TAG_NAME: "3.13-node24"
+        IMMUTABLE_TAG_NAME: "3.13.${CI_PIPELINE_IID}-node24"
+
+      - BASE_IMAGE: "registry.gitlab.com/thelabnyc/python:3.14-node24@sha256:cc99cc4124ef019b3ed3fe2fd6ce68b70401018aa6776c636de76661ea8c0fdb"
+        MUTABLE_TAG_NAME: "3.14-node24"
         IMMUTABLE_TAG_NAME: "3.13.${CI_PIPELINE_IID}-node24"
