@@ -72,7 +72,7 @@ build:
   parallel:
     matrix:
       # Python
-      - BASE_IMAGE: "registry.gitlab.com/thelabnyc/python:3.13@sha256:686b9fa72380a64dc360ef375ef05eb7310f73f642368ee183c7ea4d204c5966"
+      - BASE_IMAGE: "registry.gitlab.com/thelabnyc/python:3.13@sha256:6b4b4fd93ef0e055635a80d9be1a72b9fd99803687222d68e5fa041daf19fd34"
         MUTABLE_TAG_NAME: "3.13"
         IMMUTABLE_TAG_NAME: "3.13.${CI_PIPELINE_IID}"
 
