@@ -31,9 +31,9 @@ build:
   needs:
     - job: download_db
       artifacts: true
-  image: docker:latest@sha256:f885ee51a03b5018614ac38bd76bd0ca9960a739cf1a0e53417c946bc0335e79
+  image: docker:latest@sha256:d95427251fd155cd69a03311a8c4edf6d0778595444afc2d2c800a156eb2ecac
   services:
-    - docker:dind@sha256:f885ee51a03b5018614ac38bd76bd0ca9960a739cf1a0e53417c946bc0335e79
+    - docker:dind@sha256:d95427251fd155cd69a03311a8c4edf6d0778595444afc2d2c800a156eb2ecac
   script:
     - docker login -u "${CI_REGISTRY_USER}" -p "${CI_JOB_TOKEN}" "${CI_REGISTRY}"
     - docker pull "${BASE_IMAGE}" || true
