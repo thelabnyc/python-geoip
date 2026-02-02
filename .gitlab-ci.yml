@@ -92,4 +92,4 @@ build:
 
       - BASE_IMAGE: "registry.gitlab.com/thelabnyc/python:3.14-node24@sha256:d54e6d9e9599dd4fee616cb7807b2fcc8510ece069fc670ec29c37fa0fda5cb3"
         MUTABLE_TAG_NAME: "3.14-node24"
-        IMMUTABLE_TAG_NAME: "3.13.${CI_PIPELINE_IID}-node24"
+        IMMUTABLE_TAG_NAME: "3.14.${CI_PIPELINE_IID}-node24"
