@@ -1,21 +1,49 @@
 variables:
-  PLATFORMS: "linux/arm64/v8,linux/amd64"
-  DOCKER_BUILDKIT: "1"
   FF_NETWORK_PER_BUILD: "true"
+
+stages:
+  - download
+  - build
+  - manifest
+
+.variants:
+  py313: &py313
+    BASE_IMAGE: "registry.gitlab.com/thelabnyc/python:3.13@sha256:b1dc70a1126c573f88d03b3233a804f754fb2912d6816625c8771acd89dcf8d1"
+    MUTABLE_TAG_NAME: "3.13"
+    IMMUTABLE_TAG_NAME: "3.13.${CI_PIPELINE_IID}"
+  py314: &py314
+    BASE_IMAGE: "registry.gitlab.com/thelabnyc/python:3.14@sha256:2b16f6f5435bc0a80fda3fbf0a342bbad7ea52657a995eacdcf6726b21efc564"
+    MUTABLE_TAG_NAME: "3.14"
+    IMMUTABLE_TAG_NAME: "3.14.${CI_PIPELINE_IID}"
+  py313_node22: &py313_node22
+    BASE_IMAGE: "registry.gitlab.com/thelabnyc/python:3.13-node22@sha256:fc2cd4e62f3bd94540f151a4a5b9efb42b078731959a713ffccf68b1721c0dea"
+    MUTABLE_TAG_NAME: "3.13-node22"
+    IMMUTABLE_TAG_NAME: "3.13.${CI_PIPELINE_IID}-node22"
+  py313_node24: &py313_node24
+    BASE_IMAGE: "registry.gitlab.com/thelabnyc/python:3.13-node24@sha256:5299cc2b718b9f52c2965e6cefb693fb02e9fca93f476f98a55695933530bd47"
+    MUTABLE_TAG_NAME: "3.13-node24"
+    IMMUTABLE_TAG_NAME: "3.13.${CI_PIPELINE_IID}-node24"
+  py314_node24: &py314_node24
+    BASE_IMAGE: "registry.gitlab.com/thelabnyc/python:3.14-node24@sha256:07aabf039124abeda3df8cf86212d8df58d3f0481149f2ff084481b0e2660ec2"
+    MUTABLE_TAG_NAME: "3.14-node24"
+    IMMUTABLE_TAG_NAME: "3.14.${CI_PIPELINE_IID}-node24"
 
 .base_job: &base_job
   rules:
     - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
       variables:
         TAG_SUFFIX: "-mr${CI_MERGE_REQUEST_IID}"
-    # No suffux for default branch
+    # No suffix for default branch
     - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH && $CI_COMMIT_REF_PROTECTED == "true"
       variables:
         TAG_SUFFIX: ""
 
 download_db:
   <<: *base_job
+  stage: download
   image: ubuntu:latest@sha256:d1e2e92c075e5ca139d51a140fff46f84315c0fdce203eab2807c7e495eff4f9
+  tags:
+    - thelab-arm64
   script:
     - apt-get update
     - apt-get install -y wget
@@ -28,68 +56,64 @@ download_db:
 
 build:
   <<: *base_job
+  stage: build
   needs:
     - job: download_db
       artifacts: true
-  image: docker:latest@sha256:8bcbad4b45f0bff9d3e809d85a7ac589390f0be8acbc526850c998c35c1243fd
-  services:
-    - docker:dind@sha256:8bcbad4b45f0bff9d3e809d85a7ac589390f0be8acbc526850c998c35c1243fd
+  tags:
+    - $RUNNER_TAG
   script:
     - docker login -u "${CI_REGISTRY_USER}" -p "${CI_JOB_TOKEN}" "${CI_REGISTRY}"
-    - docker pull "${BASE_IMAGE}" || true
-
-    # Install QEMU emulation support in the kernel
-    # See: https://docs.docker.com/buildx/working-with-buildx/#build-multi-platform-images
-    - docker run --privileged --rm tonistiigi/binfmt --install all
-
-    # Create a buildx instance if one doesn't already exist
-    - if [ "$(docker buildx ls | grep docker-container  | wc -l)" -le "0" ]; then
-      docker context create buildx-build;
-      docker buildx create --use buildx-build;
-      fi
-
-    - docker buildx build
-      --platform "$PLATFORMS"
-      --pull
-      --build-arg BASE_IMAGE=$BASE_IMAGE
-      --cache-from "${CI_REGISTRY_IMAGE}:${MUTABLE_TAG_NAME}${TAG_SUFFIX}"
-      --tag "${CI_REGISTRY_IMAGE}:${MUTABLE_TAG_NAME}${TAG_SUFFIX}"
-      --tag "${CI_REGISTRY_IMAGE}:${IMMUTABLE_TAG_NAME}${TAG_SUFFIX}"
-      --file Dockerfile .
-      --push
-
-    - docker buildx build
-      --platform "$PLATFORMS"
-      --pull
-      --build-arg BASE_IMAGE=$BASE_IMAGE
-      --build-arg GEOSPATIAL=true
-      --cache-from "${CI_REGISTRY_IMAGE}:${MUTABLE_TAG_NAME}${TAG_SUFFIX}"
-      --tag "${CI_REGISTRY_IMAGE}:${MUTABLE_TAG_NAME}-geospatial${TAG_SUFFIX}"
-      --tag "${CI_REGISTRY_IMAGE}:${IMMUTABLE_TAG_NAME}-geospatial${TAG_SUFFIX}"
-      --file Dockerfile .
-      --push
-
+    - ./bin/build.sh
   parallel:
     matrix:
-      # Python
-      - BASE_IMAGE: "registry.gitlab.com/thelabnyc/python:3.13@sha256:b1dc70a1126c573f88d03b3233a804f754fb2912d6816625c8771acd89dcf8d1"
-        MUTABLE_TAG_NAME: "3.13"
-        IMMUTABLE_TAG_NAME: "3.13.${CI_PIPELINE_IID}"
+      - <<: *py313
+        ARCH: amd64
+        RUNNER_TAG: thelab-amd64
+      - <<: *py313
+        ARCH: arm64
+        RUNNER_TAG: thelab-arm64
+      - <<: *py314
+        ARCH: amd64
+        RUNNER_TAG: thelab-amd64
+      - <<: *py314
+        ARCH: arm64
+        RUNNER_TAG: thelab-arm64
+      - <<: *py313_node22
+        ARCH: amd64
+        RUNNER_TAG: thelab-amd64
+      - <<: *py313_node22
+        ARCH: arm64
+        RUNNER_TAG: thelab-arm64
+      - <<: *py313_node24
+        ARCH: amd64
+        RUNNER_TAG: thelab-amd64
+      - <<: *py313_node24
+        ARCH: arm64
+        RUNNER_TAG: thelab-arm64
+      - <<: *py314_node24
+        ARCH: amd64
+        RUNNER_TAG: thelab-amd64
+      - <<: *py314_node24
+        ARCH: arm64
+        RUNNER_TAG: thelab-arm64
 
-      - BASE_IMAGE: "registry.gitlab.com/thelabnyc/python:3.14@sha256:2b16f6f5435bc0a80fda3fbf0a342bbad7ea52657a995eacdcf6726b21efc564"
-        MUTABLE_TAG_NAME: "3.14"
-        IMMUTABLE_TAG_NAME: "3.14.${CI_PIPELINE_IID}"
-
-      # Python + Node 22
-      - BASE_IMAGE: "registry.gitlab.com/thelabnyc/python:3.13-node22@sha256:fc2cd4e62f3bd94540f151a4a5b9efb42b078731959a713ffccf68b1721c0dea"
-        MUTABLE_TAG_NAME: "3.13-node22"
-        IMMUTABLE_TAG_NAME: "3.13.${CI_PIPELINE_IID}-node22"
-
-      # Python + Node 24
-      - BASE_IMAGE: "registry.gitlab.com/thelabnyc/python:3.13-node24@sha256:5299cc2b718b9f52c2965e6cefb693fb02e9fca93f476f98a55695933530bd47"
-        MUTABLE_TAG_NAME: "3.13-node24"
-        IMMUTABLE_TAG_NAME: "3.13.${CI_PIPELINE_IID}-node24"
-
-      - BASE_IMAGE: "registry.gitlab.com/thelabnyc/python:3.14-node24@sha256:07aabf039124abeda3df8cf86212d8df58d3f0481149f2ff084481b0e2660ec2"
-        MUTABLE_TAG_NAME: "3.14-node24"
-        IMMUTABLE_TAG_NAME: "3.14.${CI_PIPELINE_IID}-node24"
+manifest:
+  stage: manifest
+  needs: [build]
+  tags:
+    - thelab-arm64
+  image: docker:latest@sha256:8bcbad4b45f0bff9d3e809d85a7ac589390f0be8acbc526850c998c35c1243fd
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH && $CI_COMMIT_REF_PROTECTED == "true"
+  script:
+    - apk add bash
+    - docker login -u "${CI_REGISTRY_USER}" -p "${CI_JOB_TOKEN}" "${CI_REGISTRY}"
+    - ./bin/push-manifest.sh
+  parallel:
+    matrix:
+      - <<: *py313
+      - <<: *py314
+      - <<: *py313_node22
+      - <<: *py313_node24
+      - <<: *py314_node24
