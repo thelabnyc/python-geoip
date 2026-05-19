@@ -103,7 +103,7 @@ manifest:
   needs: [build]
   tags:
     - thelab-arm64
-  image: docker:latest@sha256:8e3fae900cbfbdc14e8abca89a9e44363065cb535f34a09283c59cc0dde2de20
+  image: docker:latest@sha256:d0c942e5e2c14a74da706cff670ea2449fb57f9bc6abae7164461d0c6322b8b4
   rules:
     - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH && $CI_COMMIT_REF_PROTECTED == "true"
   script:
