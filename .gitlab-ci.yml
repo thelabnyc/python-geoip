@@ -41,7 +41,7 @@ stages:
 download_db:
   <<: *base_job
   stage: download
-  image: ubuntu:latest@sha256:3131b4cc82a783df6c9df078f86e01819a13594b865c2cad47bd1bca2b7063bb
+  image: ubuntu:latest@sha256:678c6550cc43645e08669028bc177f50be4e7c5b8cca677067b1914d4afc7a03
   tags:
     - thelab-arm64
   script:
@@ -103,7 +103,7 @@ manifest:
   needs: [build]
   tags:
     - thelab-arm64
-  image: docker:latest@sha256:084e385b0c9b7ab35d5a46dfedd033721448c000dbec71adcf13da8a9e71baa8
+  image: docker:latest@sha256:e8faad5a8dc5279dff929afc5449f2791736912fff9f99351d742db2fad01b4c
   rules:
     - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH && $CI_COMMIT_REF_PROTECTED == "true"
   script:
