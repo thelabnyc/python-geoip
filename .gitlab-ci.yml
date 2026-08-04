@@ -8,23 +8,23 @@ stages:
 
 .variants:
   py313: &py313
-    BASE_IMAGE: "registry.gitlab.com/thelabnyc/python:3.13@sha256:594e2e9a38e6009f4b4da1507cb98e57b81f4039bbf1ea96f779d9b4ca891f89"
+    BASE_IMAGE: "registry.gitlab.com/thelabnyc/python:3.13@sha256:ab19a86409c9bcad35a4079c166d9b029a0b76f5ffb8396a4bffb6d48d6f296b"
     MUTABLE_TAG_NAME: "3.13"
     IMMUTABLE_TAG_NAME: "3.13.${CI_PIPELINE_IID}"
   py314: &py314
-    BASE_IMAGE: "registry.gitlab.com/thelabnyc/python:3.14@sha256:0fa951451b63f5bffd9e7e87396c3d8c256e345ae20f0f86b90ea3c7cbb0bad1"
+    BASE_IMAGE: "registry.gitlab.com/thelabnyc/python:3.14@sha256:76797136d2537ab993cfd4d409ac1b1ef963c9d998a907c6c5e272abd3917c8b"
     MUTABLE_TAG_NAME: "3.14"
     IMMUTABLE_TAG_NAME: "3.14.${CI_PIPELINE_IID}"
   py313_node22: &py313_node22
-    BASE_IMAGE: "registry.gitlab.com/thelabnyc/python:3.13-node22@sha256:0eb0a99da458752e6f7920e9f2cfbed04835a77920f2e1fac026d548f57f4f42"
+    BASE_IMAGE: "registry.gitlab.com/thelabnyc/python:3.13-node22@sha256:0ead4f3d3aaf1ad1d8d15c960baf913497fea4eff3d1da319e17ef8d9d7aa79e"
     MUTABLE_TAG_NAME: "3.13-node22"
     IMMUTABLE_TAG_NAME: "3.13.${CI_PIPELINE_IID}-node22"
   py313_node24: &py313_node24
-    BASE_IMAGE: "registry.gitlab.com/thelabnyc/python:3.13-node24@sha256:3169d7493813fc3da9ba28be45d1e674a044d14868d439a89f3916f26e76e3f9"
+    BASE_IMAGE: "registry.gitlab.com/thelabnyc/python:3.13-node24@sha256:9485f581ca090723fe5fb9e653f1d00174deb7f9589fc11f29a7962eebd7094b"
     MUTABLE_TAG_NAME: "3.13-node24"
     IMMUTABLE_TAG_NAME: "3.13.${CI_PIPELINE_IID}-node24"
   py314_node24: &py314_node24
-    BASE_IMAGE: "registry.gitlab.com/thelabnyc/python:3.14-node24@sha256:347259d2fd2623c5c4c5858a56874b25054e56c6ddcd72b788a4c0ecd785ad8b"
+    BASE_IMAGE: "registry.gitlab.com/thelabnyc/python:3.14-node24@sha256:49c9eb02d1ec2008a2144f1f212ba10a9fae141f72af3ae360dcac567c598907"
     MUTABLE_TAG_NAME: "3.14-node24"
     IMMUTABLE_TAG_NAME: "3.14.${CI_PIPELINE_IID}-node24"
 
