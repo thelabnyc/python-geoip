@@ -7,26 +7,30 @@ stages:
   - manifest
 
 .variants:
-  py313: &py313
-    BASE_IMAGE: "registry.gitlab.com/thelabnyc/python:3.13@sha256:014164919b9198752e9bd8a6b7be5ecb3a42a33c09f7cca217ec539e44965a54"
-    MUTABLE_TAG_NAME: "3.13"
-    IMMUTABLE_TAG_NAME: "3.13.${CI_PIPELINE_IID}"
   py314: &py314
-    BASE_IMAGE: "registry.gitlab.com/thelabnyc/python:3.14@sha256:9a9f865840d4ce0ddbc177555d64cadc13b51b3d51908a502a386c24aaef18dc"
+    BASE_IMAGE: "registry.gitlab.com/thelabnyc/python:3.14@sha256:ddad52afd4ca41874d1c1f276c425a2cab09a36d30ae6708067ecad7407bb0bf"
     MUTABLE_TAG_NAME: "3.14"
     IMMUTABLE_TAG_NAME: "3.14.${CI_PIPELINE_IID}"
-  py313_node22: &py313_node22
-    BASE_IMAGE: "registry.gitlab.com/thelabnyc/python:3.13-node22@sha256:dd5ff9e73a0a2ee7cd08aaaaf38fde35bd6f1f1721e7ea52383211dc43711eb4"
-    MUTABLE_TAG_NAME: "3.13-node22"
-    IMMUTABLE_TAG_NAME: "3.13.${CI_PIPELINE_IID}-node22"
-  py313_node24: &py313_node24
-    BASE_IMAGE: "registry.gitlab.com/thelabnyc/python:3.13-node24@sha256:346ffebbe576a656ed58f5bcc1a5aca6ddacb6c0408766e5c5b052072ce05b73"
-    MUTABLE_TAG_NAME: "3.13-node24"
-    IMMUTABLE_TAG_NAME: "3.13.${CI_PIPELINE_IID}-node24"
+  py315: &py315
+    BASE_IMAGE: "registry.gitlab.com/thelabnyc/python:3.15@sha256:5809c3d8a1e7cdae6988a38e7e593f76015915e8f156741fca1b374532ce3376"
+    MUTABLE_TAG_NAME: "3.15"
+    IMMUTABLE_TAG_NAME: "3.15.${CI_PIPELINE_IID}"
   py314_node24: &py314_node24
-    BASE_IMAGE: "registry.gitlab.com/thelabnyc/python:3.14-node24@sha256:c64d7a7a9c2d91aa52b6a215467eb956e6ebe2ed5b68a06cd4cb2a1f3107ff30"
+    BASE_IMAGE: "registry.gitlab.com/thelabnyc/python:3.14-node24@sha256:edbab726e0c84ad753ae9cfd2190e63b9ff3241db5cf7145c55c020caeb003c2"
     MUTABLE_TAG_NAME: "3.14-node24"
     IMMUTABLE_TAG_NAME: "3.14.${CI_PIPELINE_IID}-node24"
+  py314_node26: &py314_node26
+    BASE_IMAGE: "registry.gitlab.com/thelabnyc/python:3.14-node26@sha256:854ee95fb7eb868ad8a69d18747e81c1b38f240878347207e37ac98099394b66"
+    MUTABLE_TAG_NAME: "3.14-node26"
+    IMMUTABLE_TAG_NAME: "3.14.${CI_PIPELINE_IID}-node26"
+  py315_node24: &py315_node24
+    BASE_IMAGE: "registry.gitlab.com/thelabnyc/python:3.15-node24@sha256:28432645c6a6fce0fa8b11817bd2e0cd3aeccfc1a947dab73c1d1fb796727eb8"
+    MUTABLE_TAG_NAME: "3.15-node24"
+    IMMUTABLE_TAG_NAME: "3.15.${CI_PIPELINE_IID}-node24"
+  py315_node26: &py315_node26
+    BASE_IMAGE: "registry.gitlab.com/thelabnyc/python:3.15-node26@sha256:a42a4c7546c8856ba426314c7dd34dabdd95d5f83fe57ce23f249e800000ef47"
+    MUTABLE_TAG_NAME: "3.15-node26"
+    IMMUTABLE_TAG_NAME: "3.15.${CI_PIPELINE_IID}-node26"
 
 .base_job: &base_job
   rules:
@@ -67,34 +71,40 @@ build:
     - ./bin/build.sh
   parallel:
     matrix:
-      - <<: *py313
-        ARCH: amd64
-        RUNNER_TAG: thelab-amd64
-      - <<: *py313
-        ARCH: arm64
-        RUNNER_TAG: thelab-arm64
       - <<: *py314
         ARCH: amd64
         RUNNER_TAG: thelab-amd64
       - <<: *py314
         ARCH: arm64
         RUNNER_TAG: thelab-arm64
-      - <<: *py313_node22
+      - <<: *py315
         ARCH: amd64
         RUNNER_TAG: thelab-amd64
-      - <<: *py313_node22
-        ARCH: arm64
-        RUNNER_TAG: thelab-arm64
-      - <<: *py313_node24
-        ARCH: amd64
-        RUNNER_TAG: thelab-amd64
-      - <<: *py313_node24
+      - <<: *py315
         ARCH: arm64
         RUNNER_TAG: thelab-arm64
       - <<: *py314_node24
         ARCH: amd64
         RUNNER_TAG: thelab-amd64
       - <<: *py314_node24
+        ARCH: arm64
+        RUNNER_TAG: thelab-arm64
+      - <<: *py314_node26
+        ARCH: amd64
+        RUNNER_TAG: thelab-amd64
+      - <<: *py314_node26
+        ARCH: arm64
+        RUNNER_TAG: thelab-arm64
+      - <<: *py315_node24
+        ARCH: amd64
+        RUNNER_TAG: thelab-amd64
+      - <<: *py315_node24
+        ARCH: arm64
+        RUNNER_TAG: thelab-arm64
+      - <<: *py315_node26
+        ARCH: amd64
+        RUNNER_TAG: thelab-amd64
+      - <<: *py315_node26
         ARCH: arm64
         RUNNER_TAG: thelab-arm64
 
@@ -112,8 +122,9 @@ manifest:
     - ./bin/push-manifest.sh
   parallel:
     matrix:
-      - <<: *py313
       - <<: *py314
-      - <<: *py313_node22
-      - <<: *py313_node24
+      - <<: *py315
       - <<: *py314_node24
+      - <<: *py314_node26
+      - <<: *py315_node24
+      - <<: *py315_node26

@@ -1,4 +1,4 @@
-ARG BASE_IMAGE=registry.gitlab.com/thelabnyc/python:py313@sha256:e1ed3aaeb702ac20c0340dcb09ae51d125738cabaa48516df73e98eb733fa91d
+ARG BASE_IMAGE=registry.gitlab.com/thelabnyc/python:3.14@sha256:ddad52afd4ca41874d1c1f276c425a2cab09a36d30ae6708067ecad7407bb0bf
 FROM ${BASE_IMAGE}
 
 # Environment Settings
