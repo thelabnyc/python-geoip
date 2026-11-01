@@ -12,23 +12,23 @@ stages:
     MUTABLE_TAG_NAME: "3.14"
     IMMUTABLE_TAG_NAME: "3.14.${CI_PIPELINE_IID}"
   py315: &py315
-    BASE_IMAGE: "registry.gitlab.com/thelabnyc/python:3.15@sha256:5809c3d8a1e7cdae6988a38e7e593f76015915e8f156741fca1b374532ce3376"
+    BASE_IMAGE: "registry.gitlab.com/thelabnyc/python:3.15@sha256:a04134afa4cc0bbde93cf357c2a1ffc8683590054a5cf99e1fa3eb929bb4aaa5"
     MUTABLE_TAG_NAME: "3.15"
     IMMUTABLE_TAG_NAME: "3.15.${CI_PIPELINE_IID}"
   py314_node24: &py314_node24
-    BASE_IMAGE: "registry.gitlab.com/thelabnyc/python:3.14-node24@sha256:edbab726e0c84ad753ae9cfd2190e63b9ff3241db5cf7145c55c020caeb003c2"
+    BASE_IMAGE: "registry.gitlab.com/thelabnyc/python:3.14-node24@sha256:d5326c9b1eccacf2967df286d0be8548d39a5d0abb9d4660926be682e9ef51aa"
     MUTABLE_TAG_NAME: "3.14-node24"
     IMMUTABLE_TAG_NAME: "3.14.${CI_PIPELINE_IID}-node24"
   py314_node26: &py314_node26
-    BASE_IMAGE: "registry.gitlab.com/thelabnyc/python:3.14-node26@sha256:854ee95fb7eb868ad8a69d18747e81c1b38f240878347207e37ac98099394b66"
+    BASE_IMAGE: "registry.gitlab.com/thelabnyc/python:3.14-node26@sha256:a87c903046c3ce31f30694021a596761f74cc7f04b3aa4ce62fd9a521c130bd6"
     MUTABLE_TAG_NAME: "3.14-node26"
     IMMUTABLE_TAG_NAME: "3.14.${CI_PIPELINE_IID}-node26"
   py315_node24: &py315_node24
-    BASE_IMAGE: "registry.gitlab.com/thelabnyc/python:3.15-node24@sha256:28432645c6a6fce0fa8b11817bd2e0cd3aeccfc1a947dab73c1d1fb796727eb8"
+    BASE_IMAGE: "registry.gitlab.com/thelabnyc/python:3.15-node24@sha256:ce5d8621766cd15cbfcea536e25ca8e494bb5bc3097e46f06b4a988172dafda0"
     MUTABLE_TAG_NAME: "3.15-node24"
     IMMUTABLE_TAG_NAME: "3.15.${CI_PIPELINE_IID}-node24"
   py315_node26: &py315_node26
-    BASE_IMAGE: "registry.gitlab.com/thelabnyc/python:3.15-node26@sha256:a42a4c7546c8856ba426314c7dd34dabdd95d5f83fe57ce23f249e800000ef47"
+    BASE_IMAGE: "registry.gitlab.com/thelabnyc/python:3.15-node26@sha256:911d697b6da86ab6ad8edf6f4d34a447a763741f217d5e1ef0fd39ad32b1efcb"
     MUTABLE_TAG_NAME: "3.15-node26"
     IMMUTABLE_TAG_NAME: "3.15.${CI_PIPELINE_IID}-node26"
 
