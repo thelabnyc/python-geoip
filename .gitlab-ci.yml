@@ -8,7 +8,7 @@ stages:
 
 .variants:
   py314: &py314
-    BASE_IMAGE: "registry.gitlab.com/thelabnyc/python:3.14@sha256:1ba92055981a8cfce82f3a03a79dab429fc7010a57bc6fb3a197e9c98e7d2b60"
+    BASE_IMAGE: "registry.gitlab.com/thelabnyc/python:3.14@sha256:0a6bddc08283c7d880014147befa9c8756ed2b06db6a7e7ad282ea414652efb4"
     MUTABLE_TAG_NAME: "3.14"
     IMMUTABLE_TAG_NAME: "3.14.${CI_PIPELINE_IID}"
   py315: &py315
@@ -28,7 +28,7 @@ stages:
     MUTABLE_TAG_NAME: "3.15-node24"
     IMMUTABLE_TAG_NAME: "3.15.${CI_PIPELINE_IID}-node24"
   py315_node26: &py315_node26
-    BASE_IMAGE: "registry.gitlab.com/thelabnyc/python:3.15-node26@sha256:aa24b38eb7d9503b12e84fa649430dcb94f3a839ee7a70f6ca9da4bad5677c5f"
+    BASE_IMAGE: "registry.gitlab.com/thelabnyc/python:3.15-node26@sha256:0f5c641c1f7905f22cd5a71fef3a301b9e45e860197582a11c8ee1a05cbefbd8"
     MUTABLE_TAG_NAME: "3.15-node26"
     IMMUTABLE_TAG_NAME: "3.15.${CI_PIPELINE_IID}-node26"
 
